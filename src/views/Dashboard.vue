@@ -54,9 +54,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = OrdersManagement"
+                    @click="state.currentComponent = 'OrdersManagement'"
                     :class="
-                        currentComponentName === 'OrdersManagement'
+                        state.currentComponent === 'OrdersManagement'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -102,9 +102,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = ItemsManagement"
+                    @click="state.currentComponent = 'ItemsManagement'"
                     :class="
-                        currentComponentName === 'ItemsManagement'
+                        state.currentComponent === 'ItemsManagement'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -162,9 +162,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = BuildingsManagement"
+                    @click="state.currentComponent = 'BuildingsManagement'"
                     :class="
-                        currentComponentName === 'BuildingsManagement'
+                        state.currentComponent === 'BuildingsManagement'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -272,9 +272,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = PromoCodes"
+                    @click="state.currentComponent = 'PromoCodes'"
                     :class="
-                        currentComponentName === 'PromoCodes'
+                        state.currentComponent === 'PromoCodes'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -376,9 +376,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = Users"
+                    @click="state.currentComponent = 'Users'"
                     :class="
-                        currentComponentName === 'Users'
+                        state.currentComponent === 'Users'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -437,9 +437,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = ActivityLog"
+                    @click="state.currentComponent = 'ActivityLog'"
                     :class="
-                        currentComponentName === 'ActivityLog'
+                        state.currentComponent === 'ActivityLog'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -501,9 +501,9 @@
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
                     "
-                    @click="state.currentComponent = Settings"
+                    @click="state.currentComponent = 'Settings'"
                     :class="
-                        currentComponentName === 'Settings'
+                        state.currentComponent === 'Settings'
                             ? 'bg-orangeBackground text-orangeButton'
                             : ''
                     "
@@ -581,13 +581,19 @@
             </router-link>
         </div>
         <div class="w-5/6 bg-white h-full">
-            <component :is="state.currentComponent" />
+            <OrdersManagement v-if="state.currentComponent === 'OrdersManagement'" />
+            <ItemsManagement v-if="state.currentComponent === 'ItemsManagement'" />
+            <BuildingsManagement v-if="state.currentComponent === 'BuildingsManagement'" />
+            <PromoCodes v-if="state.currentComponent === 'PromoCodes'" />
+            <Users v-if="state.currentComponent === 'Users'" />
+            <ActivityLog v-if="state.currentComponent === 'ActivityLog'" />
+            <Settings v-if="state.currentComponent === 'Settings'" />
         </div>
     </div>
 </template>
 
 <script setup>
-import { computed, reactive } from "@vue/reactivity";
+import { reactive } from "@vue/reactivity";
 import OrdersManagement from "../components/OrdersManagement.vue";
 import ItemsManagement from "../components/ItemsManagement.vue";
 import BuildingsManagement from "../components/BuildingsManagement.vue";
@@ -597,13 +603,7 @@ import ActivityLog from "../components/ActivityLog.vue";
 import Settings from "../components/Settings.vue";
 
 const state = reactive({
-    currentComponent: OrdersManagement,
-});
-
-const currentComponentName = computed(() => {
-    return state.currentComponent.__file
-        .split("/")
-        [state.currentComponent.__file.split("/").length - 1].replace(".vue", "");
+    currentComponent: "OrdersManagement",
 });
 </script>
 
