@@ -45,14 +45,27 @@
             </div>
             <hr class="my-4" />
             <div class="flex flex-col space-y-2 text-sm">
-                <!-- <router-link
-                    :to="{ name: 'orders' }" -->
-                <div class="flex items-center space-x-4 p-4 bg-orangeBackground text-orangeButton">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = OrdersManagement"
+                    :class="
+                        currentComponentName === 'OrdersManagement'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
                         height="1em"
-                        fill='var(--token-5295d512-3876-4ab3-8171-8819b3ec86f2, rgb(252, 183, 76)) /* {\"name\":\"Orange (New)\"} */'
+                        fill='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
                         viewBox="0 0 256 256"
                         class="w-5 h-5"
                     >
@@ -64,7 +77,7 @@
                             height="128"
                             rx="8"
                             stroke-width="16"
-                            stroke='var(--token-5295d512-3876-4ab3-8171-8819b3ec86f2, rgb(252, 183, 76)) /* {\"name\":\"Orange (New)\"} */'
+                            stroke='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             fill="none"
@@ -72,7 +85,7 @@
                         <path
                             d="M64.00781,48.00005h152a8,8,0,0,1,8,8V176"
                             fill="none"
-                            stroke='var(--token-5295d512-3876-4ab3-8171-8819b3ec86f2, rgb(252, 183, 76)) /* {\"name\":\"Orange (New)\"} */'
+                            stroke='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             stroke-width="16"
@@ -80,10 +93,22 @@
                     </svg>
                     <h1>Orders Management</h1>
                 </div>
-                <!-- </router-link> -->
-                <!-- <router-link
-                    :to="{ name: 'items' }" -->
-                <div class="flex items-center space-x-4 p-4">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = ItemsManagement"
+                    :class="
+                        currentComponentName === 'ItemsManagement'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -128,10 +153,22 @@
                     </svg>
                     <h1>Items Management</h1>
                 </div>
-                <!-- </router-link> -->
-                <!-- <router-link
-                    :to="{ name: 'items' }" -->
-                <div class="flex items-center space-x-4 p-4">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = BuildingsManagement"
+                    :class="
+                        currentComponentName === 'BuildingsManagement'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -226,10 +263,22 @@
                     </svg>
                     <h1>Buildings Management</h1>
                 </div>
-                <!-- </router-link> -->
-                <!-- <router-link
-                    :to="{ name: 'items' }" -->
-                <div class="flex items-center space-x-4 p-4">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = PromoCodes"
+                    :class="
+                        currentComponentName === 'PromoCodes'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -318,10 +367,22 @@
                     </svg>
                     <h1>Promo Codes</h1>
                 </div>
-                <!-- </router-link> -->
-                <!-- <router-link
-                    :to="{ name: 'items' }" -->
-                <div class="flex items-center space-x-4 p-4">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = Users"
+                    :class="
+                        currentComponentName === 'Users'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -367,10 +428,22 @@
                     </svg>
                     <h1>Users</h1>
                 </div>
-                <!-- </router-link> -->
-                <!-- <router-link
-                    :to="{ name: 'items' }" -->
-                <div class="flex items-center space-x-4 p-4">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = ActivityLog"
+                    :class="
+                        currentComponentName === 'ActivityLog'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -419,10 +492,22 @@
                     </svg>
                     <h1>Activity Log</h1>
                 </div>
-                <!-- </router-link> -->
-                <!-- <router-link
-                    :to="{ name: 'items' }" -->
-                <div class="flex items-center space-x-4 p-4">
+                <div
+                    class="
+                        cursor-pointer
+                        flex
+                        items-center
+                        space-x-4
+                        p-4
+                        hover:bg-orangeBackground hover:text-orangeButton
+                    "
+                    @click="state.currentComponent = Settings"
+                    :class="
+                        currentComponentName === 'Settings'
+                            ? 'bg-orangeBackground text-orangeButton'
+                            : ''
+                    "
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -453,7 +538,6 @@
                     </svg>
                     <h1>Settings</h1>
                 </div>
-                <!-- </router-link> -->
             </div>
             <router-link class="mt-auto p-4 flex space-x-4 items-center" :to="{ name: 'login' }">
                 <svg
@@ -496,10 +580,31 @@
                 <h1 class="text-sm text-grayText">Logout</h1>
             </router-link>
         </div>
-        <div class="w-5/6 bg-white h-full"></div>
+        <div class="w-5/6 bg-white h-full">
+            <component :is="state.currentComponent" />
+        </div>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { computed, reactive } from "@vue/reactivity";
+import OrdersManagement from "../components/OrdersManagement.vue";
+import ItemsManagement from "../components/ItemsManagement.vue";
+import BuildingsManagement from "../components/BuildingsManagement.vue";
+import PromoCodes from "../components/PromoCodes.vue";
+import Users from "../components/Users.vue";
+import ActivityLog from "../components/ActivityLog.vue";
+import Settings from "../components/Settings.vue";
+
+const state = reactive({
+    currentComponent: OrdersManagement,
+});
+
+const currentComponentName = computed(() => {
+    return state.currentComponent.__file
+        .split("/")
+        [state.currentComponent.__file.split("/").length - 1].replace(".vue", "");
+});
+</script>
 
 <style></style>
