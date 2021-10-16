@@ -267,245 +267,11 @@
                     </svg>
                     <span class="text-grayText">Add Item/s</span>
                 </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
-                    <img
-                        src="../assets/meal.jpg"
-                        class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
-                    />
-                    <div class="flex flex-col space-y-1 w-full">
-                        <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
-                        </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-4 p-4 shadow-sm rounded-lg">
+                <div
+                    class="flex items-center space-x-4 p-4 shadow-sm rounded-lg"
+                    v-for="item in numberOfIterations"
+                    :key="item"
+                >
                     <img
                         src="../assets/meal.jpg"
                         class="w-12 h-12 object-cover rounded-md"
@@ -528,10 +294,30 @@
 </template>
 
 <script setup>
-import { reactive } from "@vue/reactivity";
+import { computed, reactive } from "@vue/reactivity";
 
 const state = reactive({
     currentTab: "Main Dishes",
+});
+
+const numberOfIterations = computed(() => {
+    switch (state.currentTab) {
+        case "All":
+        case "Main Dishes":
+            return 15;
+        case "Offers":
+            return 1;
+        case "Appetizer":
+            return 2;
+        case "Soup":
+            return 3;
+        case "Burger":
+            return 1;
+        case "Sandwich":
+            return 2;
+        case "Salad":
+            return 3;
+    }
 });
 </script>
 
