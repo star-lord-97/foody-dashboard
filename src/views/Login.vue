@@ -3,7 +3,12 @@
         <div class="w-1/2 bg-grayBackground flex flex-col justify-center items-center">
             <div class="w-5/12 flex flex-col justify-center items-center space-y-6">
                 <div class="flex flex-col items-center w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="494.176" height="136.834">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        view
+                        class="w-36 h-36"
+                        viewBox="0 0 494.176 1"
+                    >
                         <g>
                             <g transform="translate(0 0)">
                                 <path

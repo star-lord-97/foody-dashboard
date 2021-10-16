@@ -3,41 +3,44 @@
         <div class="px-4 pt-10 pb-6 flex justify-between">
             <div class="flex space-x-2">
                 <div
-                    class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
-                        px-4
-                        py-2
-                        rounded-full
-                        border border-graySVG
+                    class="text-xs px-4 py-2 rounded-full cursor-pointer"
+                    :class="
+                        state.currentTab === 'All'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
                     "
+                    @click="state.currentTab = 'All'"
                 >
                     All
                 </div>
                 <div
-                    class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
-                        px-4
-                        py-2
-                        rounded-full
-                        border border-graySVG
+                    class="text-xs px-4 py-2 rounded-full cursor-pointer"
+                    :class="
+                        state.currentTab === 'Offers'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
                     "
+                    @click="state.currentTab = 'Offers'"
                 >
                     Offers
                 </div>
                 <div
                     class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
+                        text-xs
                         px-4
                         py-2
                         rounded-full
-                        border border-graySVG
+                        cursor-pointer
                         flex
                         space-x-2
                         items-center
                     "
+                    :class="
+                        state.currentTab === 'Appetizer'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
+                    "
+                    @click="state.currentTab = 'Appetizer'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -53,16 +56,21 @@
                 </div>
                 <div
                     class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
+                        text-xs
                         px-4
                         py-2
                         rounded-full
-                        border border-graySVG
+                        cursor-pointer
                         flex
                         space-x-2
                         items-center
                     "
+                    :class="
+                        state.currentTab === 'Soup'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
+                    "
+                    @click="state.currentTab = 'Soup'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -78,15 +86,21 @@
                 </div>
                 <div
                     class="
-                        text-white text-xs
-                        bg-orangeButton
+                        text-xs
                         px-4
                         py-2
                         rounded-full
+                        cursor-pointer
                         flex
                         space-x-2
                         items-center
                     "
+                    :class="
+                        state.currentTab === 'Main Dishes'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
+                    "
+                    @click="state.currentTab = 'Main Dishes'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -102,16 +116,21 @@
                 </div>
                 <div
                     class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
+                        text-xs
                         px-4
                         py-2
                         rounded-full
-                        border border-graySVG
+                        cursor-pointer
                         flex
                         space-x-2
                         items-center
                     "
+                    :class="
+                        state.currentTab === 'Burger'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
+                    "
+                    @click="state.currentTab = 'Burger'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -127,16 +146,21 @@
                 </div>
                 <div
                     class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
+                        text-xs
                         px-4
                         py-2
                         rounded-full
-                        border border-graySVG
+                        cursor-pointer
                         flex
                         space-x-2
                         items-center
                     "
+                    :class="
+                        state.currentTab === 'Sandwich'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
+                    "
+                    @click="state.currentTab = 'Sandwich'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -153,16 +177,21 @@
                 </div>
                 <div
                     class="
-                        text-grayText text-xs
-                        bg-lightGrayBackground
+                        text-xs
                         px-4
                         py-2
                         rounded-full
-                        border border-graySVG
+                        cursor-pointer
                         flex
                         space-x-2
                         items-center
                     "
+                    :class="
+                        state.currentTab === 'Salad'
+                            ? 'text-white bg-orangeButton'
+                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
+                    "
+                    @click="state.currentTab = 'Salad'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -498,6 +527,12 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive } from "@vue/reactivity";
+
+const state = reactive({
+    currentTab: "Main Dishes",
+});
+</script>
 
 <style></style>

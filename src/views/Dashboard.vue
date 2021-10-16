@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full flex">
-        <div class="w-1/6 bg-grayBackground h-full p-6 flex flex-col">
+        <div class="w-80 bg-grayBackground h-full p-6 flex flex-col fixed">
             <div class="space-y-4">
                 <img
                     src="../assets/profile-picture.jpg"
@@ -580,7 +580,7 @@
                 <h1 class="text-sm text-grayText">Logout</h1>
             </router-link>
         </div>
-        <div class="w-5/6 bg-white h-full">
+        <div class="w-full bg-white h-full ml-80">
             <OrdersManagement v-if="state.currentComponent === 'OrdersManagement'" />
             <ItemsManagement v-if="state.currentComponent === 'ItemsManagement'" />
             <BuildingsManagement v-if="state.currentComponent === 'BuildingsManagement'" />
