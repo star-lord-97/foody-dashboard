@@ -1,4 +1,345 @@
 <template>
+    <!-- Filter Modal -->
+    <div v-if="state.showFilterModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.showFilterModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-2/5 w-1/5 z-20 rounded-xl overflow-hidden"
+            style="top: 30%; left: 40%"
+        >
+            <div class="p-6 flex flex-col items-start space-y-2">
+                <h1>Filter</h1>
+                <div class="flex flex-col">
+                    <label for="type" class="text-grayText text-sm">Filter Type</label>
+                    <select
+                        class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                        id="type"
+                        name="type"
+                    >
+                        <option value="assigned-to">Assigned to ..</option>
+                        <option value="building">Building</option>
+                    </select>
+                </div>
+                <div class="flex flex-col">
+                    <label for="type" class="text-grayText text-sm">Filter Attribute</label>
+                    <input
+                        type="text"
+                        class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                        placeholder="Enter Name"
+                    />
+                </div>
+                <button
+                    class="
+                        bg-orangeButton
+                        text-white text-sm
+                        font-semibold
+                        py-1.5
+                        px-4
+                        rounded-md
+                        text-center
+                    "
+                >
+                    Filter
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- New Building Modal -->
+    <div v-if="state.showNewBuildingModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.showNewBuildingModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-3/5 w-1/3 z-20 rounded-xl overflow-hidden"
+            style="top: 20%; left: 33%"
+        >
+            <div class="p-6 flex flex-col items-center justify-between h-full">
+                <div class="flex w-full justify-between">
+                    <h1>New Building</h1>
+                    <svg
+                        v-if="state.showNewBuildingModal"
+                        @click="state.showNewBuildingModal = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                    >
+                        <g
+                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
+                </div>
+                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Building Name</label>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Enter Name"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Assign to</label>
+                        <select
+                            class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                            id="type"
+                            name="type"
+                        >
+                            <option value="assigned-to">Ahmed Mohamed</option>
+                            <option value="building">Kareem Mohamed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-between w-full space-x-4">
+                    <button
+                        class="
+                            text-orangeButton
+                            border border-orangeButton
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="state.showNewBuildingModal = false"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        class="
+                            bg-orangeButton
+                            text-white
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                    >
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- New Delivery Man Modal -->
+    <div v-if="state.showNewDeliveryManModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.showNewDeliveryManModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-4/5 w-1/3 z-20 rounded-xl overflow-x-scroll"
+            style="top: 10%; left: 33%"
+        >
+            <div class="p-6 flex flex-col items-center space-y-6">
+                <div class="flex w-full justify-between">
+                    <h1>New Delivery Man</h1>
+                    <svg
+                        v-if="state.showNewDeliveryManModal"
+                        @click="state.showNewDeliveryManModal = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                    >
+                        <g
+                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
+                </div>
+                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Delivery Name</label>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Enter Name"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Phone Number</label>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Enter Phone Number"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Email</label>
+                        <span class="text-xs">We will send an invitation to this mail</span>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Enter Email"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Password</label>
+                        <span class="text-xs">He won't be able to change this password</span>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Enter Password"
+                        />
+                    </div>
+                </div>
+                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm"
+                            >Assign delivery to building(s)</label
+                        >
+                        <treeselect
+                            v-model="state.buildings"
+                            :multiple="true"
+                            :flat="true"
+                            :options="[
+                                { id: 0, label: 'A-17 - Valeo' },
+                                { id: 1, label: 'A-18 - Valeo' },
+                                { id: 2, label: 'A-19 - Valeo' },
+                                { id: 3, label: 'A-20 - Valeo' },
+                                { id: 4, label: 'A-21 - Valeo' },
+                                { id: 5, label: 'A-22 - Valeo' },
+                            ]"
+                        />
+                        <!-- <select
+                            class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                            id="type"
+                            name="type"
+                        >
+                            <option value="assigned-to">Ahmed Mohamed</option>
+                            <option value="building">Kareem Mohamed</option>
+                        </select> -->
+                    </div>
+                </div>
+                <div class="flex justify-between w-full space-x-4">
+                    <button
+                        class="
+                            text-orangeButton
+                            border border-orangeButton
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="state.showNewDeliveryManModal = false"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        class="
+                            bg-orangeButton
+                            text-white
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                    >
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="w-full">
         <div class="px-4 pt-10 pb-6 flex justify-between">
             <div class="flex items-center space-x-6">
@@ -12,7 +353,9 @@
                         px-4
                         py-1
                         rounded-md
+                        cursor-pointer
                     "
+                    @click="state.showFilterModal = true"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -36,12 +379,13 @@
                     class="
                         bg-semiLightGrayBackground
                         flex
-                        space-x-2
+                        space-x-4
                         items-center
                         px-4
                         py-1
                         rounded-md
                     "
+                    :class="state.showSearchBar ? 'w-80' : 'cursor-pointer'"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +416,49 @@
                             stroke-width="16"
                         ></line>
                     </svg>
-                    <span>Search</span>
+                    <input
+                        v-if="state.showSearchBar"
+                        type="text"
+                        class="bg-semiLightGrayBackground w-full text-sm focus:outline-none py-0.5"
+                        placeholder="Search for ..."
+                        autofocus
+                    />
+                    <span @click="state.showSearchBar = true" v-else>Search</span>
+                    <svg
+                        v-if="state.showSearchBar"
+                        @click="state.showSearchBar = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
+                        class="h-5 w-5 cursor-pointer"
+                    >
+                        <g
+                            color='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {\"name\":\"Gray (New)\"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
                 </div>
             </div>
             <div class="flex items-center space-x-4">
@@ -89,10 +475,12 @@
                         rounded-lg
                         border border-orangeButton
                     "
+                    @click="state.showNewBuildingModal = true"
                 >
                     <span>New Building</span>
                 </button>
                 <button
+                    @click="state.showNewDeliveryManModal = true"
                     class="
                         bg-orangeButton
                         text-white
@@ -241,6 +629,18 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive } from "@vue/reactivity";
+import Treeselect from "vue3-treeselect";
+import "vue3-treeselect/dist/vue3-treeselect.css";
+
+const state = reactive({
+    showFilterModal: false,
+    showNewBuildingModal: false,
+    showSearchBar: false,
+    showNewDeliveryManModal: false,
+    buildings: [0, 1, 2],
+});
+</script>
 
 <style></style>

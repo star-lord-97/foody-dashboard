@@ -9,6 +9,7 @@
   "dependencies": {
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
+    "vue3-treeselect": "^0.1.10",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

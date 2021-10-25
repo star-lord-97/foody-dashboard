@@ -45,6 +45,7 @@
                             focus:outline-none
                             px-4
                         "
+                        v-model="state.email"
                     />
                     <input
                         type="text"
@@ -58,14 +59,16 @@
                             focus:outline-none
                             px-4
                         "
+                        v-model="state.password"
                     />
                 </div>
                 <div class="flex justify-between w-full text-sm">
-                    <div class="flex items-center space-x-2">
-                        <input type="checkbox" name="remember" id="remember" />
-                        <p>Remember me</p>
-                    </div>
-                    <h1 class="text-orangeButton cursor-pointer">Reset Password!</h1>
+                    <router-link
+                        to="/reset-password"
+                        class="text-orangeButton cursor-pointer hover:underline"
+                    >
+                        Reset Password!
+                    </router-link>
                 </div>
                 <router-link
                     class="
@@ -110,6 +113,13 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive } from "@vue/reactivity";
+
+const state = reactive({
+    email: "",
+    password: "",
+});
+</script>
 
 <style scoped></style>
