@@ -12,10 +12,18 @@
         >
             <div class="p-6 flex flex-col items-start space-y-2">
                 <h1>Filter</h1>
-                <div class="flex flex-col">
+                <div class="flex flex-col w-full">
                     <label for="type" class="text-grayText text-sm">Filter Type</label>
                     <select
-                        class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                        class="
+                            focus:outline-none
+                            py-4
+                            pl-4
+                            pr-12
+                            bg-grayBackground
+                            rounded-lg
+                            w-full
+                        "
                         id="type"
                         name="type"
                     >
@@ -23,11 +31,19 @@
                         <option value="building">Building</option>
                     </select>
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col w-full">
                     <label for="type" class="text-grayText text-sm">Filter Attribute</label>
                     <input
                         type="text"
-                        class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                        class="
+                            focus:outline-none
+                            py-4
+                            pl-4
+                            pr-12
+                            bg-grayBackground
+                            rounded-lg
+                            w-full
+                        "
                         placeholder="Enter Name"
                     />
                 </div>
@@ -296,14 +312,6 @@
                                 { id: 5, label: 'A-22 - Valeo' },
                             ]"
                         />
-                        <!-- <select
-                            class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
-                            id="type"
-                            name="type"
-                        >
-                            <option value="assigned-to">Ahmed Mohamed</option>
-                            <option value="building">Kareem Mohamed</option>
-                        </select> -->
                     </div>
                 </div>
                 <div class="flex justify-between w-full space-x-4">

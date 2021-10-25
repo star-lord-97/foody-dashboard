@@ -1,4 +1,178 @@
 <template>
+    <!-- Edit Category Modal -->
+    <div v-if="state.showEditCategoryModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.showEditCategoryModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-2/5 w-1/5 z-20 rounded-xl overflow-hidden"
+            style="top: 30%; left: 40%"
+        >
+            <div class="p-6 flex flex-col items-center justify-between h-full">
+                <div class="flex w-full justify-between">
+                    <h1>Edit Category</h1>
+                    <svg
+                        v-if="state.showEditCategoryModal"
+                        @click="state.showEditCategoryModal = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                    >
+                        <g
+                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
+                </div>
+                <div class="flex flex-col w-full space-y-2">
+                    <label for="type" class="text-grayText text-sm">Category Name</label>
+                    <input
+                        type="text"
+                        class="
+                            focus:outline-none
+                            py-4
+                            pl-4
+                            pr-12
+                            bg-grayBackground
+                            rounded-lg
+                            w-full
+                        "
+                        placeholder="Enter Name"
+                        value="Main Dishes"
+                    />
+                </div>
+                <div class="flex items-center w-full justify-between">
+                    <label for="type" class="text-grayText text-sm">Show category to users</label>
+                    <Toggle v-model="state.showCategoryToUsers" />
+                </div>
+                <button
+                    class="
+                        text-white
+                        bg-orangeButton
+                        font-semibold
+                        py-2
+                        rounded-md
+                        text-center
+                        w-full
+                    "
+                    @click="state.showEditCategoryModal = false"
+                >
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
+    <div v-if="state.showCreateCategoryModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.showCreateCategoryModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-2/5 w-1/5 z-20 rounded-xl overflow-hidden"
+            style="top: 30%; left: 40%"
+        >
+            <div class="p-6 flex flex-col items-center justify-between h-full">
+                <div class="flex w-full justify-between">
+                    <h1>New Category</h1>
+                    <svg
+                        v-if="state.showCreateCategoryModal"
+                        @click="state.showCreateCategoryModal = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                    >
+                        <g
+                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
+                </div>
+                <div class="flex flex-col w-full space-y-2">
+                    <label for="type" class="text-grayText text-sm">Category Name</label>
+                    <input
+                        type="text"
+                        class="
+                            focus:outline-none
+                            py-4
+                            pl-4
+                            pr-12
+                            bg-grayBackground
+                            rounded-lg
+                            w-full
+                        "
+                        placeholder="Enter Category Name"
+                    />
+                </div>
+                <div class="flex items-center w-full justify-between">
+                    <label for="type" class="text-grayText text-sm">Show category to users</label>
+                    <Toggle v-model="state.showCategoryToUsers" />
+                </div>
+                <button
+                    class="
+                        text-white
+                        bg-orangeButton
+                        font-semibold
+                        py-2
+                        rounded-md
+                        text-center
+                        w-full
+                    "
+                    @click="state.showCreateCategoryModal = false"
+                >
+                    Create
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="w-full">
         <div class="px-4 pt-10 pb-6 flex justify-between">
             <div class="flex space-x-2">
@@ -206,7 +380,7 @@
                     <span>Salad</span>
                 </div>
             </div>
-            <div
+            <button
                 class="
                     bg-orangeButton
                     text-white
@@ -216,13 +390,51 @@
                     items-center
                     px-4
                     rounded-lg
+                    cursor-pointer
                 "
+                @click="state.showCreateCategoryModal = true"
             >
-                <span>Add Category</span>
-            </div>
+                Add Category
+            </button>
         </div>
         <div class="p-6 space-y-4">
-            <h1 class="font-bold text-xl">Main Dishes</h1>
+            <div class="flex items-center space-x-2">
+                <h1 class="font-bold text-xl">Main Dishes</h1>
+                <h1 class="text-green-400 text-2xl">&#x25cf;</h1>
+                <svg
+                    @click="state.showEditCategoryModal = true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 256 256"
+                    focusable="false"
+                    color='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {"name":"Gray (New)"} */'
+                    class="h-5 w-5 cursor-pointer"
+                >
+                    <g
+                        color='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {"name":"Gray (New)"} */'
+                        weight="regular"
+                    >
+                        <path
+                            d="M96,216H48a8,8,0,0,1-8-8V163.31371a8,8,0,0,1,2.34315-5.65686l120-120a8,8,0,0,1,11.3137,0l44.6863,44.6863a8,8,0,0,1,0,11.3137Z"
+                            fill="none"
+                            stroke='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {"name":"Gray (New)"} */'
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="16"
+                        ></path>
+                        <line
+                            x1="136"
+                            y1="64"
+                            x2="192"
+                            y2="120"
+                            fill="none"
+                            stroke='var(--token-9368426e-3480-425c-a8b0-62b9bfbee28c, rgb(189, 189, 189)) /* {"name":"Gray (New)"} */'
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="16"
+                        ></line>
+                    </g>
+                </svg>
+            </div>
             <div class="grid grid-cols-4 gap-3">
                 <div
                     class="
@@ -295,9 +507,13 @@
 
 <script setup>
 import { computed, reactive } from "@vue/reactivity";
+import Toggle from "@vueform/toggle";
 
 const state = reactive({
     currentTab: "Main Dishes",
+    showEditCategoryModal: false,
+    showCategoryToUsers: true,
+    showCreateCategoryModal: false,
 });
 
 const numberOfIterations = computed(() => {
@@ -321,4 +537,4 @@ const numberOfIterations = computed(() => {
 });
 </script>
 
-<style></style>
+<style src="@vueform/toggle/themes/default.css"></style>
