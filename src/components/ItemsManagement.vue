@@ -479,7 +479,8 @@
                     </svg>
                     <span class="text-grayText">Add Item/s</span>
                 </div>
-                <div
+                <router-link
+                    to="/items/1"
                     class="flex items-center space-x-4 p-4 shadow-sm rounded-lg"
                     v-for="item in numberOfIterations"
                     :key="item"
@@ -499,7 +500,7 @@
                         >
                         <span class="text-xs text-orangeButton">4.0/5</span>
                     </div>
-                </div>
+                </router-link>
             </div>
         </div>
     </div>

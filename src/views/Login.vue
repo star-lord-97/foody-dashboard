@@ -48,7 +48,7 @@
                         v-model="state.email"
                     />
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Enter your password"
                         class="
                             text-sm
@@ -62,6 +62,9 @@
                         v-model="state.password"
                     />
                 </div>
+                <span v-if="state.err" class="text-xs text-red-400"
+                    >Wrong credentials, double check and tyr again!</span
+                >
                 <div class="flex justify-between w-full text-sm">
                     <router-link
                         to="/reset-password"
@@ -70,7 +73,7 @@
                         Reset Password!
                     </router-link>
                 </div>
-                <router-link
+                <button
                     class="
                         bg-orangeButton
                         text-white
@@ -80,10 +83,10 @@
                         rounded-md
                         text-center
                     "
-                    :to="{ name: 'dashboard' }"
+                    @click="login"
                 >
                     Login
-                </router-link>
+                </button>
             </div>
         </div>
         <div class="w-1/2 h-full relative">
@@ -115,11 +118,26 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
+import { useRouter } from "vue-router";
+import store from "../store";
+
+const router = useRouter();
 
 const state = reactive({
     email: "",
     password: "",
+    err: false,
 });
+const login = () => {
+    store
+        .dispatch("login", { ...state })
+        .then((res) => {
+            router.push("/orders");
+        })
+        .catch((err) => {
+            state.err = true;
+        });
+};
 </script>
 
 <style scoped></style>

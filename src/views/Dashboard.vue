@@ -45,7 +45,8 @@
             </div>
             <hr class="my-4" />
             <div class="flex flex-col space-y-2 text-sm">
-                <div
+                <router-link
+                    to="/orders"
                     class="
                         cursor-pointer
                         flex
@@ -53,12 +54,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'OrdersManagement'"
-                    :class="
-                        state.currentComponent === 'OrdersManagement'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -92,8 +87,9 @@
                         ></path>
                     </svg>
                     <h1>Orders Management</h1>
-                </div>
-                <div
+                </router-link>
+                <router-link
+                    to="/items"
                     class="
                         cursor-pointer
                         flex
@@ -101,12 +97,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'ItemsManagement'"
-                    :class="
-                        state.currentComponent === 'ItemsManagement'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -152,8 +142,9 @@
                         ></path>
                     </svg>
                     <h1>Items Management</h1>
-                </div>
-                <div
+                </router-link>
+                <router-link
+                    to="/buildings"
                     class="
                         cursor-pointer
                         flex
@@ -161,12 +152,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'BuildingsManagement'"
-                    :class="
-                        state.currentComponent === 'BuildingsManagement'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -262,8 +247,9 @@
                         ></line>
                     </svg>
                     <h1>Buildings Management</h1>
-                </div>
-                <div
+                </router-link>
+                <router-link
+                    to="/promo-codes"
                     class="
                         cursor-pointer
                         flex
@@ -271,12 +257,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'PromoCodes'"
-                    :class="
-                        state.currentComponent === 'PromoCodes'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -366,8 +346,9 @@
                         ></line>
                     </svg>
                     <h1>Promo Codes</h1>
-                </div>
-                <div
+                </router-link>
+                <router-link
+                    to="/users"
                     class="
                         cursor-pointer
                         flex
@@ -375,12 +356,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'Users'"
-                    :class="
-                        state.currentComponent === 'Users'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -427,8 +402,9 @@
                         ></path>
                     </svg>
                     <h1>Users</h1>
-                </div>
-                <div
+                </router-link>
+                <router-link
+                    to="/logs"
                     class="
                         cursor-pointer
                         flex
@@ -436,12 +412,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'ActivityLog'"
-                    :class="
-                        state.currentComponent === 'ActivityLog'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -491,8 +461,9 @@
                         <circle cx="44" cy="192" r="12"></circle>
                     </svg>
                     <h1>Activity Log</h1>
-                </div>
-                <div
+                </router-link>
+                <router-link
+                    to="/settings"
                     class="
                         cursor-pointer
                         flex
@@ -500,12 +471,6 @@
                         space-x-4
                         p-4
                         hover:bg-orangeBackground hover:text-orangeButton
-                    "
-                    @click="state.currentComponent = 'Settings'"
-                    :class="
-                        state.currentComponent === 'Settings'
-                            ? 'bg-orangeBackground text-orangeButton'
-                            : ''
                     "
                 >
                     <svg
@@ -537,7 +502,7 @@
                         ></path>
                     </svg>
                     <h1>Settings</h1>
-                </div>
+                </router-link>
             </div>
             <router-link class="mt-auto p-4 flex space-x-4 items-center" :to="{ name: 'login' }">
                 <svg
@@ -581,13 +546,13 @@
             </router-link>
         </div>
         <div class="w-full bg-white h-full ml-80">
-            <OrdersManagement v-if="state.currentComponent === 'OrdersManagement'" />
-            <ItemsManagement v-if="state.currentComponent === 'ItemsManagement'" />
-            <BuildingsManagement v-if="state.currentComponent === 'BuildingsManagement'" />
-            <PromoCodes v-if="state.currentComponent === 'PromoCodes'" />
-            <Users v-if="state.currentComponent === 'Users'" />
-            <ActivityLog v-if="state.currentComponent === 'ActivityLog'" />
-            <Settings v-if="state.currentComponent === 'Settings'" />
+            <OrdersManagement v-if="$route.params.tab === 'orders'" />
+            <ItemsManagement v-if="$route.params.tab === 'items'" />
+            <BuildingsManagement v-if="$route.params.tab === 'buildings'" />
+            <PromoCodes v-if="$route.params.tab === 'promo-codes'" />
+            <Users v-if="$route.params.tab === 'users'" />
+            <ActivityLog v-if="$route.params.tab === 'logs'" />
+            <Settings v-if="$route.params.tab === 'settings'" />
         </div>
     </div>
 </template>
@@ -607,4 +572,10 @@ const state = reactive({
 });
 </script>
 
-<style></style>
+<style scoped>
+.router-link-active,
+.router-link-exact-active {
+    @apply text-orangeButton;
+    @apply bg-orangeBackground;
+}
+</style>
