@@ -1,4 +1,7 @@
 <template>
+    <div class="flex justify-center items-center w-screen min-h-screen z-50" v-if="loading">
+        <moon-loader color="black"></moon-loader>
+    </div>
     <div class="w-screen h-screen font-urbanist">
         <Login v-if="$route.name === 'login'" />
         <div v-else class="flex">
@@ -586,10 +589,7 @@
                         <h1>Settings</h1>
                     </router-link>
                 </div>
-                <router-link
-                    class="mt-auto p-4 flex space-x-4 items-center"
-                    :to="{ name: 'login' }"
-                >
+                <button @click="logout" class="mt-auto p-4 flex space-x-4 items-center">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="1em"
@@ -628,27 +628,41 @@
                         ></path>
                     </svg>
                     <h1 class="text-sm text-grayText">Logout</h1>
-                </router-link>
+                </button>
             </div>
-        </div>
-        <div class="w-full bg-white h-full ml-80">
-            <router-view />
+            <div class="w-full bg-white ml-80">
+                <router-view />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, reactive } from "@vue/runtime-core";
+import { computed, onMounted, reactive } from "@vue/runtime-core";
 import store from "./store";
 import Login from "./views/Login.vue";
+import MoonLoader from "vue-spinner/src/MoonLoader.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const state = reactive({
     name: "",
     email: "",
 });
 
+const loading = computed(() => {
+    return store.getters.loading;
+});
+
+const logout = () => {
+    store.dispatch("logout").then((res) => {
+        router.push("/login");
+    });
+};
+
 onMounted(() => {
-    if (localStorage.getItem("token")) {
+    if (localStorage.getItem("foody_token")) {
         store.dispatch("getUserData").then((res) => {
             state.name = res.data.name;
             state.email = res.data.email;

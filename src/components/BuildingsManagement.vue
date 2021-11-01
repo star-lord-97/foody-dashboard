@@ -26,9 +26,10 @@
                         "
                         id="type"
                         name="type"
+                        v-model="state.filter.type"
                     >
-                        <option value="assigned-to">Assigned to ..</option>
-                        <option value="building">Building</option>
+                        <option value="assigned_to__name__contains">Assigned to ..</option>
+                        <option value="name__contains">Building</option>
                     </select>
                 </div>
                 <div class="flex flex-col w-full">
@@ -45,6 +46,7 @@
                             w-full
                         "
                         placeholder="Enter Name"
+                        v-model="state.filter.value"
                     />
                 </div>
                 <button
@@ -57,6 +59,7 @@
                         rounded-md
                         text-center
                     "
+                    @click="filter"
                 >
                     Filter
                 </button>
@@ -128,6 +131,7 @@
                                 w-full
                             "
                             placeholder="Enter Name"
+                            v-model="state.newBuilding.name"
                         />
                     </div>
                     <div class="flex flex-col w-full space-y-2">
@@ -136,9 +140,11 @@
                             class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
                             id="type"
                             name="type"
+                            v-model="state.newBuilding.assigned_to"
                         >
-                            <option value="assigned-to">Ahmed Mohamed</option>
-                            <option value="building">Kareem Mohamed</option>
+                            <option v-for="user in state.users" :key="user.id" :value="user.id">
+                                {{ user.name }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -169,8 +175,178 @@
                             text-center
                             w-1/2
                         "
+                        @click="registerBuilding"
                     >
                         Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Building Modal -->
+    <div v-if="state.editBuilding.showEditBuildingModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.editBuilding.showEditBuildingModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-3/5 w-1/3 z-20 rounded-xl overflow-hidden"
+            style="top: 20%; left: 33%"
+        >
+            <div class="p-6 flex flex-col items-center justify-between h-full">
+                <div class="flex w-full justify-between">
+                    <h1>New Building</h1>
+                    <svg
+                        v-if="state.editBuilding.showEditBuildingModal"
+                        @click="state.editBuilding.showEditBuildingModal = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                    >
+                        <g
+                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
+                </div>
+                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Building Name</label>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Enter Name"
+                            v-model="state.newBuilding.name"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Assign to</label>
+                        <select
+                            class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
+                            id="type"
+                            name="type"
+                            v-model="state.newBuilding.assigned_to"
+                        >
+                            <option v-for="user in state.users" :key="user.id" :value="user.id">
+                                {{ user.name }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-between w-full space-x-4">
+                    <button
+                        class="
+                            text-orangeButton
+                            border border-orangeButton
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="state.editBuilding.showEditBuildingModal = false"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        class="
+                            bg-orangeButton
+                            text-white
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="editBuilding"
+                    >
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- delete modal -->
+    <div v-if="state.deleteBuilding.showDeleteModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.deleteBuilding.showDeleteModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-2/5 w-1/3 z-20 rounded-xl overflow-hidden"
+            style="top: 30%; left: 33%"
+        >
+            <div class="p-6 flex flex-col items-center justify-between h-full space-y-8">
+                <div class="w-full text-center">
+                    Are you sure you want to delete
+                    <span class="font-bold">{{ state.deleteBuilding.buildingToDelete.name }}</span
+                    >?
+                </div>
+                <div class="flex justify-between w-full space-x-4">
+                    <button
+                        class="
+                            text-orangeButton
+                            border border-orangeButton
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="state.deleteBuilding.showDeleteModal = false"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        class="
+                            bg-orangeButton
+                            text-white
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="deleteBuilding"
+                    >
+                        Delete
                     </button>
                 </div>
             </div>
@@ -348,7 +524,7 @@
             </div>
         </div>
     </div>
-    <div class="w-full">
+    <div class="flex flex-col">
         <div class="px-4 pt-10 pb-6 flex justify-between">
             <div class="flex items-center space-x-6">
                 <h1 class="font-semibold text-xl">Building Management</h1>
@@ -430,6 +606,8 @@
                         class="bg-semiLightGrayBackground w-full text-sm focus:outline-none py-0.5"
                         placeholder="Search for ..."
                         autofocus
+                        v-model="state.search"
+                        @keyup.enter="search"
                     />
                     <span @click="state.showSearchBar = true" v-else>Search</span>
                     <svg
@@ -483,7 +661,15 @@
                         rounded-lg
                         border border-orangeButton
                     "
-                    @click="state.showNewBuildingModal = true"
+                    @click="
+                        state.showNewBuildingModal = true;
+                        store.dispatch('getAllUsers').then((res) => {
+                            state.users = res.data.map((el) => {
+                                return { id: el.id, name: el.name };
+                            });
+                            state.newBuilding.assigned_to = state.users[0].id;
+                        });
+                    "
                 >
                     <span>New Building</span>
                 </button>
@@ -515,32 +701,14 @@
             </div>
             <div
                 class="flex flex-row bg-grayBackground text-sm divide-x-2 py-4 rounded-sm"
-                v-for="item in 15"
-                :key="item"
+                v-for="building in state.buildings"
+                :key="building"
             >
-                <span class="w-12 text-center">1</span>
-                <span class="pl-2 w-3/12">14 A - Valeo</span>
-                <span class="pl-2 w-4/12">15 Users</span>
+                <span class="w-12 text-center">{{ building.id }}</span>
+                <span class="pl-2 w-3/12">{{ building.name }}</span>
+                <span class="pl-2 w-4/12">{{ building.number_of_users }} Users</span>
                 <div class="pl-2 w-4/12 flex items-center space-x-2">
-                    <img
-                        src="../assets/profile-picture.jpg"
-                        class="w-5 h-5 rounded-full object-cover"
-                        alt="assigned-to"
-                    />
-                    <span>Kareem Mohamed</span>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
-                        fill='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {\"name\":\"Black (New)\"} */'
-                        viewBox="0 0 256 256"
-                        class="w-5 h-5"
-                    >
-                        <rect width="256" height="256" fill="none"></rect>
-                        <path
-                            d="M215.39111,92.93848A8.00015,8.00015,0,0,0,208,88H48a8,8,0,0,0-5.65674,13.657l80,79.99976a7.99945,7.99945,0,0,0,11.31348,0l80-79.99976A8.00011,8.00011,0,0,0,215.39111,92.93848Z"
-                        ></path>
-                    </svg>
+                    <span>{{ building.assigned_to.name }}</span>
                 </div>
                 <div class="pl-2 flex items-center space-x-4">
                     <svg
@@ -549,7 +717,11 @@
                         height="1em"
                         fill='var(--token-574d4218-ff40-4048-adf1-2a196fe571b1, rgb(190, 35, 35)) /* {\"name\":\"Primary Red\"} */'
                         viewBox="0 0 256 256"
-                        class="h-5 w-5"
+                        class="h-5 w-5 cursor-pointer"
+                        @click="
+                            state.deleteBuilding.showDeleteModal = true;
+                            state.deleteBuilding.buildingToDelete = building;
+                        "
                     >
                         <rect width="256" height="256" fill="none"></rect>
                         <line
@@ -608,7 +780,17 @@
                         height="1em"
                         fill="rgb(51, 143, 204)"
                         viewBox="0 0 256 256"
-                        class="h-5 w-5"
+                        class="h-5 w-5 cursor-pointer"
+                        @click="
+                            getBuilding(building.id);
+                            store.dispatch('getAllUsers').then((res) => {
+                                state.users = res.data.map((el) => {
+                                    return { id: el.id, name: el.name };
+                                });
+                                state.newBuilding.assigned_to = state.users[0].id;
+                                state.editBuilding.buildingToEdit = building;
+                            });
+                        "
                     >
                         <rect width="256" height="256" fill="none"></rect>
                         <path
@@ -639,15 +821,114 @@
 
 <script setup>
 import { reactive } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 import Treeselect from "vue3-treeselect";
 import "vue3-treeselect/dist/vue3-treeselect.css";
+import store from "../store";
 
 const state = reactive({
     showFilterModal: false,
     showNewBuildingModal: false,
     showSearchBar: false,
     showNewDeliveryManModal: false,
-    buildings: [0, 1, 2],
+    deleteBuilding: {
+        showDeleteModal: false,
+        buildingToDelete: {},
+    },
+    editBuilding: {
+        showEditBuildingModal: false,
+        buildingToEdit: {},
+    },
+    buildings: [],
+    filter: {
+        type: "assigned_to__name__contains",
+        value: "",
+    },
+    search: "",
+    newBuilding: {
+        name: "",
+        assigned_to: "",
+        number_of_users: 0,
+    },
+    users: [],
+});
+
+const filter = () => {
+    store
+        .dispatch("filterBuildings", { ...state.filter })
+        .then((res) => {
+            state.buildings = res.data.results;
+            state.filter = {
+                type: "assigned_to__name__contains",
+                value: "",
+            };
+            state.showFilterModal = false;
+        })
+        .catch((err) => {
+            state.buildings = [];
+            state.showFilterModal = false;
+        });
+};
+
+const search = () => {
+    store.dispatch("searchBuildings", state.search).then((res) => {
+        state.buildings = res.data.results;
+        state.search = "";
+        state.showFilterModal = false;
+    });
+};
+
+const deleteBuilding = () => {
+    store.dispatch("deleteBuilding", state.deleteBuilding.buildingToDelete.id).then((res) => {
+        state.buildings = res.data.results;
+        state.deleteBuilding.showDeleteModal = false;
+    });
+};
+
+const registerBuilding = () => {
+    store.dispatch("registerBuilding", state.newBuilding).then((res) => {
+        state.buildings = res.data.results;
+        state.newBuilding = {
+            name: "",
+            assigned_to: "",
+            number_of_users: 0,
+        };
+        state.showNewBuildingModal = false;
+    });
+};
+
+const getBuilding = (id) => {
+    store.dispatch("getBuilding", id).then((res) => {
+        state.newBuilding.name = res.name;
+        state.newBuilding.assigned_to = res.assigned_to;
+        state.editBuilding.showEditBuildingModal = true;
+    });
+};
+
+const editBuilding = () => {
+    store
+        .dispatch("editBuilding", {
+            id: state.editBuilding.buildingToEdit.id,
+            data: state.newBuilding,
+        })
+        .then((res) => {
+            state.buildings = res.data.results;
+            state.newBuilding = {
+                name: "",
+                assigned_to: "",
+                number_of_users: 0,
+            };
+            state.editBuilding.showEditBuildingModal = false;
+        });
+};
+
+onMounted(() => {
+    store
+        .dispatch("getBuildings")
+        .then((res) => {
+            state.buildings = res.data.results;
+        })
+        .catch((err) => {});
 });
 </script>
 

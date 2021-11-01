@@ -62,7 +62,7 @@
                         v-model="state.password"
                     />
                 </div>
-                <span v-if="state.err" class="text-xs text-red-400"
+                <span v-if="validationErrors" class="text-xs text-red-400"
                     >Wrong credentials, double check and tyr again!</span
                 >
                 <div class="flex justify-between w-full text-sm">
@@ -117,7 +117,7 @@
 </template>
 
 <script setup>
-import { reactive } from "@vue/reactivity";
+import { computed, reactive } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import store from "../store";
 
@@ -126,18 +126,20 @@ const router = useRouter();
 const state = reactive({
     email: "",
     password: "",
-    err: false,
 });
+
 const login = () => {
     store
         .dispatch("login", { ...state })
         .then((res) => {
             router.push("/orders");
         })
-        .catch((err) => {
-            state.err = true;
-        });
+        .catch((err) => {});
 };
+
+const validationErrors = computed(() => {
+    return store.getters.validationErrors;
+});
 </script>
 
 <style scoped></style>

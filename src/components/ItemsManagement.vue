@@ -63,12 +63,12 @@
                             w-full
                         "
                         placeholder="Enter Name"
-                        value="Main Dishes"
+                        v-model="state.newCategory.name"
                     />
                 </div>
                 <div class="flex items-center w-full justify-between">
                     <label for="type" class="text-grayText text-sm">Show category to users</label>
-                    <Toggle v-model="state.showCategoryToUsers" />
+                    <Toggle v-model="state.newCategory.active" />
                 </div>
                 <button
                     class="
@@ -80,13 +80,14 @@
                         text-center
                         w-full
                     "
-                    @click="state.showEditCategoryModal = false"
+                    @click="editCategory"
                 >
                     Create
                 </button>
             </div>
         </div>
     </div>
+    <!-- Create Category -->
     <div v-if="state.showCreateCategoryModal">
         <div
             class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
@@ -150,11 +151,12 @@
                             w-full
                         "
                         placeholder="Enter Category Name"
+                        v-model="state.newCategory.name"
                     />
                 </div>
                 <div class="flex items-center w-full justify-between">
                     <label for="type" class="text-grayText text-sm">Show category to users</label>
-                    <Toggle v-model="state.showCategoryToUsers" />
+                    <Toggle v-model="state.newCategory.active" />
                 </div>
                 <button
                     class="
@@ -166,10 +168,255 @@
                         text-center
                         w-full
                     "
-                    @click="state.showCreateCategoryModal = false"
+                    @click="registerCategory"
                 >
                     Create
                 </button>
+            </div>
+        </div>
+    </div>
+    <!-- new item modal -->
+    <div v-if="state.showCreateItemModal">
+        <div
+            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
+            style="background: rgba(0, 0, 0, 0.5)"
+            @click="state.showCreateItemModal = false"
+        ></div>
+        <div
+            class="bg-white fixed h-4/5 w-1/3 z-20 rounded-xl overflow-y-scroll"
+            style="top: 5%; left: 33%"
+        >
+            <div class="p-6 flex flex-col items-center justify-between">
+                <div class="flex w-full justify-between">
+                    <h1>New Item</h1>
+                    <svg
+                        v-if="state.showCreateItemModal"
+                        @click="state.showCreateItemModal = false"
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 cursor-pointer"
+                        viewBox="0 0 256 256"
+                        focusable="false"
+                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                    >
+                        <g
+                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                            weight="regular"
+                        >
+                            <line
+                                x1="200"
+                                y1="56"
+                                x2="56"
+                                y2="200"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                            <line
+                                x1="200"
+                                y1="200"
+                                x2="56"
+                                y2="56"
+                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="16"
+                            ></line>
+                        </g>
+                    </svg>
+                </div>
+                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Name</label>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Name"
+                            v-model="state.newItem.name"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Item Description</label>
+                        <input
+                            type="text"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Description"
+                            v-model="state.newItem.description"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Item Price</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Price"
+                            v-model="state.newItem.price"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Item Cost</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Cost"
+                            v-model="state.newItem.item_cost"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Max per day</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Max per day"
+                            v-model="state.newItem.max_per_day"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Max per slot</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Max per slot"
+                            v-model="state.newItem.max_per_slot"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Price on discount</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Price on discount"
+                            v-model="state.newItem.price_on_discount"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Category</label>
+                        <select
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            v-model="state.newItem.category_id"
+                        >
+                            <option
+                                v-for="category in state.categories"
+                                :key="category.id"
+                                :value="category.id"
+                            >
+                                {{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col w-full space-y-2" v-if="state.extras.length > 0">
+                        <label for="type" class="text-grayText text-sm">Extras</label>
+                        <treeselect
+                            v-model="state.newItem.extras"
+                            :multiple="true"
+                            :options="
+                                state.extras.map((el) => {
+                                    return { id: el.id, label: el.name };
+                                })
+                            "
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Image</label>
+                        <input type="file" @change="uploadImage($event)" />
+                    </div>
+                </div>
+                <div class="flex justify-between w-full space-x-4">
+                    <button
+                        class="
+                            text-orangeButton
+                            border border-orangeButton
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="state.showCreateItemModal = false"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        class="
+                            bg-orangeButton
+                            text-white
+                            font-semibold
+                            py-4
+                            px-4
+                            rounded-md
+                            text-center
+                            w-1/2
+                        "
+                        @click="registerItem"
+                    >
+                        Save
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -178,206 +425,19 @@
             <div class="flex space-x-2">
                 <div
                     class="text-xs px-4 py-2 rounded-full cursor-pointer"
+                    v-for="category in state.categories"
+                    :key="category"
                     :class="
-                        state.currentTab === 'All'
+                        state.currentCategory.name === category.name
                             ? 'text-white bg-orangeButton'
                             : 'text-grayText bg-lightGrayBackground border border-graySVG'
                     "
-                    @click="state.currentTab = 'All'"
+                    @click="
+                        state.currentCategory = category;
+                        getCategoryItems();
+                    "
                 >
-                    All
-                </div>
-                <div
-                    class="text-xs px-4 py-2 rounded-full cursor-pointer"
-                    :class="
-                        state.currentTab === 'Offers'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Offers'"
-                >
-                    Offers
-                </div>
-                <div
-                    class="
-                        text-xs
-                        px-4
-                        py-2
-                        rounded-full
-                        cursor-pointer
-                        flex
-                        space-x-2
-                        items-center
-                    "
-                    :class="
-                        state.currentTab === 'Appetizer'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Appetizer'"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        class="w-4 h-4 fill-current"
-                    >
-                        <path
-                            d="M16 6v8h3v8h2V2c-2.76 0-5 2.24-5 4zm-5 3H9V2H7v7H5V2H3v7c0 2.21 1.79 4 4 4v9h2v-9c2.21 0 4-1.79 4-4V2h-2v7z"
-                        ></path>
-                    </svg>
-                    <span>Appetizer</span>
-                </div>
-                <div
-                    class="
-                        text-xs
-                        px-4
-                        py-2
-                        rounded-full
-                        cursor-pointer
-                        flex
-                        space-x-2
-                        items-center
-                    "
-                    :class="
-                        state.currentTab === 'Soup'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Soup'"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        class="w-4 h-4 fill-current"
-                    >
-                        <path
-                            d="M19.66 14c-.66 1.92-2.24 3.54-4.4 4.39l-1.26.5V20h-4v-1.11l-1.27-.5c-2.16-.85-3.74-2.47-4.4-4.39h15.33M22 2L4 3.99V12H2c0 3.69 2.47 6.86 6 8.25V22h8v-1.75c3.53-1.39 6-4.56 6-8.25H10.5V8H22V6.5H10.5V4.78L22 3.51V2zM8 6.5V5.06l1-.11V6.5H8zm-2.5 0V5.34l1-.11V6.5h-1zM8 12V8h1v4H8zm-2.5 0V8h1v4h-1z"
-                        ></path>
-                    </svg>
-                    <span>Soup</span>
-                </div>
-                <div
-                    class="
-                        text-xs
-                        px-4
-                        py-2
-                        rounded-full
-                        cursor-pointer
-                        flex
-                        space-x-2
-                        items-center
-                    "
-                    :class="
-                        state.currentTab === 'Main Dishes'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Main Dishes'"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        class="w-4 h-4 fill-current"
-                    >
-                        <path
-                            d="M2 19l2 2h16l2-2zm1-1h16.97c.29-3.26-2.28-6-5.48-6-2.35 0-4.35 1.48-5.14 3.55-.41-.23-.87-.38-1.35-.47V9h1.75C10.99 9 12 7.99 12 6.75h9v-1.5h-9C12 4.01 10.99 3 9.75 3H3v1.5h1v.75H3v1.5h1v.75H3V9h1v7.39c-.44.46-.78 1-1 1.61zm11.5-4c.99 0 1.91.4 2.58 1.14.24.26.44.55.58.86h-6.32c.58-1.21 1.81-2 3.16-2zM8 4.5h2v.75H8V4.5zm0 2.25h2v.75H8v-.75zM5.5 4.5h1v.75h-1V4.5zm0 2.25h1v.75h-1v-.75zM5.5 9h1v6.06c-.35.06-.68.17-1 .3V9z"
-                        ></path>
-                    </svg>
-                    <span>Main Dishes</span>
-                </div>
-                <div
-                    class="
-                        text-xs
-                        px-4
-                        py-2
-                        rounded-full
-                        cursor-pointer
-                        flex
-                        space-x-2
-                        items-center
-                    "
-                    :class="
-                        state.currentTab === 'Burger'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Burger'"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        class="w-4 h-4 fill-current"
-                    >
-                        <path
-                            d="M2 19c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-3H2v3zm2-1h16v1H4v-1zm14.66-6.5c-1.95 0-2.09 1-3.33 1-1.19 0-1.42-1-3.33-1-1.95 0-2.09 1-3.33 1-1.19 0-1.42-1-3.33-1-1.95 0-2.09 1-3.33 1v2c1.9 0 2.17-1 3.35-1 1.19 0 1.42 1 3.33 1 1.95 0 2.09-1 3.33-1 1.19 0 1.42 1 3.33 1 1.95 0 2.09-1 3.33-1 1.19 0 1.4.98 3.32 1l-.01-1.98c-1.61-.33-1.62-1.02-3.33-1.02zM22 9c.02-4-4.28-6-10-6C6.29 3 2 5 2 9v1h20V9zM4.18 8C5.01 5.81 8.61 5 12 5c3.31 0 5.93.73 7.19 1.99.3.31.52.64.65 1.01H4.18z"
-                        ></path>
-                    </svg>
-                    <span>Burger</span>
-                </div>
-                <div
-                    class="
-                        text-xs
-                        px-4
-                        py-2
-                        rounded-full
-                        cursor-pointer
-                        flex
-                        space-x-2
-                        items-center
-                    "
-                    :class="
-                        state.currentTab === 'Sandwich'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Sandwich'"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        class="w-4 h-4 fill-current"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M18 3H6C3.79 3 2 4.79 2 7c0 1.48.81 2.75 2 3.45V19c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8.55c1.19-.69 2-1.97 2-3.45 0-2.21-1.79-4-4-4zm-4 12h-4v-4h4v4z"
-                        ></path>
-                    </svg>
-                    <span>Sandwich</span>
-                </div>
-                <div
-                    class="
-                        text-xs
-                        px-4
-                        py-2
-                        rounded-full
-                        cursor-pointer
-                        flex
-                        space-x-2
-                        items-center
-                    "
-                    :class="
-                        state.currentTab === 'Salad'
-                            ? 'text-white bg-orangeButton'
-                            : 'text-grayText bg-lightGrayBackground border border-graySVG'
-                    "
-                    @click="state.currentTab = 'Salad'"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        focusable="false"
-                        viewBox="0 0 24 24"
-                        class="w-4 h-4 fill-current"
-                    >
-                        <path
-                            d="M8.1 13.34l2.83-2.83L3.91 3.5c-1.56 1.56-1.56 4.09 0 5.66l4.19 4.18zm6.78-1.81c1.53.71 3.68.21 5.27-1.38 1.91-1.91 2.28-4.65.81-6.12-1.46-1.46-4.2-1.1-6.12.81-1.59 1.59-2.09 3.74-1.38 5.27L3.7 19.87l1.41 1.41L12 14.41l6.88 6.88 1.41-1.41L13.41 13l1.47-1.47z"
-                        ></path>
-                    </svg>
-                    <span>Salad</span>
+                    {{ category.name }}
                 </div>
             </div>
             <button
@@ -399,10 +459,15 @@
         </div>
         <div class="p-6 space-y-4">
             <div class="flex items-center space-x-2">
-                <h1 class="font-bold text-xl">Main Dishes</h1>
-                <h1 class="text-green-400 text-2xl">&#x25cf;</h1>
+                <h1 class="font-bold text-xl">{{ state.currentCategory.name }}</h1>
+                <h1
+                    class="text-2xl"
+                    :class="state.currentCategory.active ? 'text-green-400' : 'text-red-400'"
+                >
+                    &#x25cf;
+                </h1>
                 <svg
-                    @click="state.showEditCategoryModal = true"
+                    @click="getCategory(state.currentCategory.id)"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 256 256"
                     focusable="false"
@@ -445,7 +510,9 @@
                         items-center
                         justify-center
                         space-y-2
+                        cursor-pointer
                     "
+                    @click="state.showCreateItemModal = true"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -480,25 +547,22 @@
                     <span class="text-grayText">Add Item/s</span>
                 </div>
                 <router-link
-                    to="/items/1"
-                    class="flex items-center space-x-4 p-4 shadow-sm rounded-lg"
-                    v-for="item in numberOfIterations"
+                    :to="'/items/' + item.id"
+                    class="flex items-center space-x-4 p-4 shadow-sm rounded-lg w-full"
+                    v-for="item in state.items"
                     :key="item"
                 >
                     <img
-                        src="../assets/meal.jpg"
+                        :src="'/foody-dashboard/src/assets' + item.image"
                         class="w-12 h-12 object-cover rounded-md"
-                        alt="meal"
+                        :alt="item.name"
                     />
                     <div class="flex flex-col space-y-1 w-full">
                         <div class="flex justify-between">
-                            <span class="text-sm">Chicken Fillet</span>
-                            <span class="text-xs">54.00 EGP</span>
+                            <span class="text-sm">{{ item.name }}</span>
+                            <span class="text-xs">{{ item.price }} EGP</span>
                         </div>
-                        <span class="text-xs text-grayText"
-                            >Lorem ipsum, dolor sit amet consectetur adipisicing.</span
-                        >
-                        <span class="text-xs text-orangeButton">4.0/5</span>
+                        <span class="text-xs text-grayText">{{ item.description }}</span>
                     </div>
                 </router-link>
             </div>
@@ -507,34 +571,122 @@
 </template>
 
 <script setup>
-import { computed, reactive } from "@vue/reactivity";
+import { computed, reactive, ref } from "@vue/reactivity";
+import { onMounted } from "@vue/runtime-core";
 import Toggle from "@vueform/toggle";
+import axios from "axios";
+import store from "../store";
+import Treeselect from "vue3-treeselect";
+import "vue3-treeselect/dist/vue3-treeselect.css";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const state = reactive({
-    currentTab: "Main Dishes",
+    currentCategory: {},
     showEditCategoryModal: false,
-    showCategoryToUsers: true,
     showCreateCategoryModal: false,
+    showCreateItemModal: false,
+    categories: [],
+    items: [],
+    extras: [],
+    newCategory: {
+        name: "",
+        active: true,
+    },
+    newItem: {
+        name: "",
+        description: "",
+        price: "",
+        item_cost: "",
+        price_on_discount: "",
+        active: true,
+        category_id: "",
+        extras: [],
+        image: "",
+        size_medium_price: 0,
+        size_large_price: 0,
+        max_per_day: "",
+        max_per_slot: "",
+    },
 });
 
-const numberOfIterations = computed(() => {
-    switch (state.currentTab) {
-        case "All":
-        case "Main Dishes":
-            return 15;
-        case "Offers":
-            return 1;
-        case "Appetizer":
-            return 2;
-        case "Soup":
-            return 3;
-        case "Burger":
-            return 1;
-        case "Sandwich":
-            return 2;
-        case "Salad":
-            return 3;
-    }
+const editCategory = () => {
+    store
+        .dispatch("editCategory", {
+            id: state.currentCategory.id,
+            data: state.newCategory,
+        })
+        .then((res) => {
+            state.categories = res.data.results;
+            state.newCategory = {
+                name: "",
+                active: true,
+            };
+            state.currentCategory = state.categories[0];
+            state.showEditCategoryModal = false;
+        });
+};
+
+const registerCategory = () => {
+    store
+        .dispatch("registerCategory", {
+            ...state.newCategory,
+        })
+        .then((res) => {
+            state.categories = res.data.results;
+            state.newCategory = {
+                name: "",
+                active: true,
+            };
+            state.showCreateCategoryModal = false;
+        });
+};
+
+const getCategory = (id) => {
+    store.dispatch("getCategory", id).then((res) => {
+        state.newCategory.name = res.name;
+        state.newCategory.active = res.active;
+        state.showEditCategoryModal = true;
+    });
+};
+
+const getCategoryItems = () => {
+    store.dispatch("getCategoryItems", state.currentCategory.id).then((res) => {
+        state.items = res.data.results;
+    });
+};
+
+const registerItem = () => {
+    store.dispatch("registerItem", state.newItem).then((res) => {
+        router.push("/items/" + res.data.id);
+    });
+};
+
+const uploadImage = (event) => {
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    axios
+        .post("http://localhost:8000/api/v1/upload/", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        })
+        .then((res) => {
+            state.newItem.image = res.data.file;
+        });
+};
+
+onMounted(() => {
+    store.dispatch("getCategories").then((res) => {
+        state.categories = res.data.results;
+        state.currentCategory = state.categories[0];
+        state.newItem.category_id = state.categories[0].id;
+        getCategoryItems();
+        store.dispatch("getExtras").then((res) => {
+            state.extras = res.data.results;
+        });
+    });
 });
 </script>
 

@@ -10,23 +10,31 @@ import PromoCodes from "../components/PromoCodes.vue";
 import PushNotifications from "../components/PushNotifications.vue";
 import Users from "../components/Users.vue";
 import Settings from "../components/Settings.vue";
+import store from "../store";
 
 const routes = [
+    {
+        path: "/",
+        redirect: "/orders",
+    },
     {
         path: "/orders",
         name: "orders",
         component: OrdersManagement,
+        meta: { adminsOnly: true },
     },
     {
         path: "/items/:id",
-        name: "items",
+        name: "item",
         component: EditItem,
+        meta: { adminsOnly: true },
     },
-    // {
-    //     path: "/items",
-    //     name: "items",
-    //     component: ItemsManagement,
-    // },
+    {
+        path: "/items",
+        name: "items",
+        component: ItemsManagement,
+        meta: { adminsOnly: true },
+    },
     {
         path: "/kitchen",
         name: "kitchen",
@@ -36,42 +44,74 @@ const routes = [
         path: "/buildings",
         name: "buildings",
         component: BuildingsManagement,
+        meta: { adminsOnly: true },
     },
     {
         path: "/promo-codes",
         name: "promo-codes",
         component: PromoCodes,
+        meta: { adminsOnly: true },
     },
     {
         path: "/notifications",
         name: "notification",
         component: PushNotifications,
+        meta: { adminsOnly: true },
     },
     {
         path: "/users",
         name: "users",
         component: Users,
+        meta: { adminsOnly: true },
     },
     {
         path: "/settings",
         name: "settings",
         component: Settings,
+        meta: { adminsOnly: true },
     },
     {
         path: "/login",
         name: "login",
         component: Login,
+        meta: { loggedOutOnly: true },
     },
     {
         path: "/reset-password",
         name: "reset-password",
         component: ResetPassword,
+        meta: { loggedOutOnly: true },
     },
 ];
 
 const router = createRouter({
     history: createWebHistory("foody-dashboard"),
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.loggedOnly)) {
+        if (!store.getters.isLogged) {
+            store.dispatch("logout");
+            next({ path: "/login" });
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.adminsOnly)) {
+        if (!store.getters.isAdmin) {
+            next({ path: "/kitchen" });
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.loggedOutOnly)) {
+        if (store.getters.isLogged) {
+            next({ path: "/" });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
 });
 
 export default router;

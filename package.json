@@ -7,10 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@popperjs/core": "^2.10.2",
     "@vueform/toggle": "^2.0.1",
     "axios": "^0.23.0",
+    "v-calendar": "^3.0.0-alpha.6",
     "vue": "^3.2.16",
     "vue-router": "^4.0.12",
+    "vue-spinner": "^1.0.4",
     "vue3-treeselect": "^0.1.10",
     "vuex": "^4.0.2"
   },
