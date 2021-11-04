@@ -85,7 +85,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory("foody-dashboard"),
+    history: createWebHistory(),
     routes,
 });
 

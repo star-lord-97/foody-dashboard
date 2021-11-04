@@ -667,6 +667,8 @@ onMounted(() => {
             state.name = res.data.name;
             state.email = res.data.email;
         });
+    } else {
+        router.push("/login");
     }
 });
 </script>

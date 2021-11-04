@@ -248,7 +248,7 @@
     <div class="w-full p-6 flex flex-col space-y-6">
         <div class="flex space-x-4">
             <img
-                :src="'/foody-dashboard/src/assets' + state.item.image"
+                :src="'/src/assets' + state.item.image"
                 alt=""
                 class="rounded-lg w-32 h-24 object-cover"
             />

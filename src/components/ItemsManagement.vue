@@ -553,7 +553,7 @@
                     :key="item"
                 >
                     <img
-                        :src="'/foody-dashboard/src/assets' + item.image"
+                        :src="'/src/assets' + item.image"
                         class="w-12 h-12 object-cover rounded-md"
                         :alt="item.name"
                     />
