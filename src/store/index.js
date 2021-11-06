@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default createStore({
     state: {
-        baseUrl: "http://127.0.0.1:8000/api/v1",
+        baseUrl: "http://localhost:8000/foody",
         token: localStorage.getItem("foody_token") || null,
         isAdmin: localStorage.getItem("foody_isAdmin") || false,
         isStaff: localStorage.getItem("foody_isStaff") || false,
@@ -569,6 +569,129 @@ export default createStore({
                 const url = context.state.baseUrl + "/menuitems/" + id;
                 axios
                     .put(url, data)
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        searchExtras(context, payload) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/extras/";
+                // const parameters = { name__contains: payload };
+                const parameters = { name: payload };
+                axios
+                    .get(url, {
+                        params: parameters,
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        deleteExtra(context, id) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/extras/" + id;
+                axios
+                    .delete(url)
+                    .then((res) => {
+                        context.dispatch("getExtras").then((res) => {
+                            context.commit("resetValidationErrors");
+                            context.commit("toggleLoading");
+                            resolve(res);
+                        });
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        registerExtra(context, extra) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/extras/";
+                axios
+                    .post(url, extra)
+                    .then((res) => {
+                        context.dispatch("getExtras").then((res) => {
+                            context.commit("resetValidationErrors");
+                            context.commit("toggleLoading");
+                            resolve(res);
+                        });
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        getExtra(context, id) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/extras/" + id;
+                axios
+                    .get(url)
+                    .then((res) => {
+                        context.commit("toggleLoading");
+                        resolve(res.data);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        editExtra(context, { id, data }) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/extras/" + id;
+                axios
+                    .put(url, data)
+                    .then((res) => {
+                        context.dispatch("getExtras").then((res) => {
+                            context.commit("resetValidationErrors");
+                            context.commit("toggleLoading");
+                            resolve(res);
+                        });
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        getExtras(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/extras/";
+                axios
+                    .get(url)
                     .then((res) => {
                         context.commit("resetValidationErrors");
                         context.commit("toggleLoading");

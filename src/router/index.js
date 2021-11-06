@@ -3,6 +3,7 @@ import Login from "../views/Login.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 import OrdersManagement from "../components/OrdersManagement.vue";
 import ItemsManagement from "../components/ItemsManagement.vue";
+import ExtrasManagement from "../components/ExtrasManagement.vue";
 import EditItem from "../components/EditItem.vue";
 import KitchenView from "../components/KitchenView.vue";
 import BuildingsManagement from "../components/BuildingsManagement.vue";
@@ -33,6 +34,12 @@ const routes = [
         path: "/items",
         name: "items",
         component: ItemsManagement,
+        meta: { adminsOnly: true },
+    },
+    {
+        path: "/extras",
+        name: "extras",
+        component: ExtrasManagement,
         meta: { adminsOnly: true },
     },
     {
@@ -89,29 +96,29 @@ const router = createRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.loggedOnly)) {
-        if (!store.getters.isLogged) {
-            store.dispatch("logout");
-            next({ path: "/login" });
-        } else {
-            next();
-        }
-    } else if (to.matched.some((record) => record.meta.adminsOnly)) {
-        if (!store.getters.isAdmin) {
-            next({ path: "/kitchen" });
-        } else {
-            next();
-        }
-    } else if (to.matched.some((record) => record.meta.loggedOutOnly)) {
-        if (store.getters.isLogged) {
-            next({ path: "/" });
-        } else {
-            next();
-        }
-    } else {
-        next();
-    }
-});
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some((record) => record.meta.loggedOnly)) {
+//         if (!store.getters.isLogged) {
+//             store.dispatch("logout");
+//             next({ path: "/login" });
+//         } else {
+//             next();
+//         }
+//     } else if (to.matched.some((record) => record.meta.adminsOnly)) {
+//         if (!store.getters.isAdmin) {
+//             next({ path: "/kitchen" });
+//         } else {
+//             next();
+//         }
+//     } else if (to.matched.some((record) => record.meta.loggedOutOnly)) {
+//         if (store.getters.isLogged) {
+//             next({ path: "/" });
+//         } else {
+//             next();
+//         }
+//     } else {
+//         next();
+//     }
+// });
 
 export default router;

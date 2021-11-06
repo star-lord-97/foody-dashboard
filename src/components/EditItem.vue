@@ -288,7 +288,7 @@
         </div>
         <h1 class="font-semibold text-lg">Selections</h1>
         <div class="flex flex-col" v-if="state.extras.length > 0">
-            <p class="text-xs text-grayText">Extras (max:2)</p>
+            <p class="text-xs text-grayText">Extras</p>
             <div
                 v-for="extra in state.item.extras"
                 :key="extra"

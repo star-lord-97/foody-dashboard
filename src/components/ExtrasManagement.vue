@@ -1,77 +1,10 @@
 <template>
-    <!-- Filter Modal -->
-    <div v-if="state.showFilterModal">
+    <!-- New Extra Modal -->
+    <div v-if="state.showNewExtraModal">
         <div
             class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
             style="background: rgba(0, 0, 0, 0.5)"
-            @click="state.showFilterModal = false"
-        ></div>
-        <div
-            class="bg-white fixed h-2/5 w-1/5 z-20 rounded-xl overflow-hidden"
-            style="top: 30%; left: 40%"
-        >
-            <div class="p-6 flex flex-col items-start space-y-2">
-                <h1>Filter</h1>
-                <div class="flex flex-col w-full">
-                    <label for="type" class="text-grayText text-sm">Filter Type</label>
-                    <select
-                        class="
-                            focus:outline-none
-                            py-4
-                            pl-4
-                            pr-12
-                            bg-grayBackground
-                            rounded-lg
-                            w-full
-                        "
-                        id="type"
-                        name="type"
-                        v-model="state.filter.type"
-                    >
-                        <option value="assigned_to__name__contains">Assigned to ..</option>
-                        <option value="name__contains">Building</option>
-                    </select>
-                </div>
-                <div class="flex flex-col w-full">
-                    <label for="type" class="text-grayText text-sm">Filter Attribute</label>
-                    <input
-                        type="text"
-                        class="
-                            focus:outline-none
-                            py-4
-                            pl-4
-                            pr-12
-                            bg-grayBackground
-                            rounded-lg
-                            w-full
-                        "
-                        placeholder="Enter Name"
-                        v-model="state.filter.value"
-                    />
-                </div>
-                <button
-                    class="
-                        bg-orangeButton
-                        text-white text-sm
-                        font-semibold
-                        py-1.5
-                        px-4
-                        rounded-md
-                        text-center
-                    "
-                    @click="filter"
-                >
-                    Filter
-                </button>
-            </div>
-        </div>
-    </div>
-    <!-- New Building Modal -->
-    <div v-if="state.showNewBuildingModal">
-        <div
-            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
-            style="background: rgba(0, 0, 0, 0.5)"
-            @click="state.showNewBuildingModal = false"
+            @click="state.showNewExtraModal = false"
         ></div>
         <div
             class="bg-white fixed h-3/5 w-1/3 z-20 rounded-xl overflow-hidden"
@@ -79,10 +12,10 @@
         >
             <div class="p-6 flex flex-col items-center justify-between h-full">
                 <div class="flex w-full justify-between">
-                    <h1>New Building</h1>
+                    <h1>New Extra</h1>
                     <svg
-                        v-if="state.showNewBuildingModal"
-                        @click="state.showNewBuildingModal = false"
+                        v-if="state.showNewExtraModal"
+                        @click="state.showNewExtraModal = false"
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 cursor-pointer"
                         viewBox="0 0 256 256"
@@ -118,7 +51,7 @@
                 </div>
                 <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
                     <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Building Name</label>
+                        <label for="type" class="text-grayText text-sm">Extra Name</label>
                         <input
                             type="text"
                             class="
@@ -131,21 +64,29 @@
                                 w-full
                             "
                             placeholder="Enter Name"
-                            v-model="state.newBuilding.name"
+                            v-model="state.newExtra.name"
                         />
                     </div>
                     <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Assign to</label>
-                        <select
-                            class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
-                            id="type"
-                            name="type"
-                            v-model="state.newBuilding.assigned_to"
-                        >
-                            <option v-for="user in state.users" :key="user.id" :value="user.id">
-                                {{ user.name }}
-                            </option>
-                        </select>
+                        <label for="type" class="text-grayText text-sm">Extra Cost</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Extra Cost"
+                            v-model="state.newExtra.extra_cost"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Extra Cost</label>
+                        <Toggle v-model="state.newExtra.active" />
                     </div>
                 </div>
                 <div class="flex justify-between w-full space-x-4">
@@ -160,7 +101,7 @@
                             text-center
                             w-1/2
                         "
-                        @click="state.showNewBuildingModal = false"
+                        @click="state.showNewExtraModal = false"
                     >
                         Cancel
                     </button>
@@ -175,7 +116,7 @@
                             text-center
                             w-1/2
                         "
-                        @click="registerBuilding"
+                        @click="registerExtra"
                     >
                         Save
                     </button>
@@ -183,12 +124,12 @@
             </div>
         </div>
     </div>
-    <!-- Edit Building Modal -->
-    <div v-if="state.editBuilding.showEditBuildingModal">
+    <!-- Edit Extra Modal -->
+    <div v-if="state.editExtra.showEditExtraModal">
         <div
             class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
             style="background: rgba(0, 0, 0, 0.5)"
-            @click="state.editBuilding.showEditBuildingModal = false"
+            @click="state.editExtra.showEditExtraModal = false"
         ></div>
         <div
             class="bg-white fixed h-3/5 w-1/3 z-20 rounded-xl overflow-hidden"
@@ -196,10 +137,10 @@
         >
             <div class="p-6 flex flex-col items-center justify-between h-full">
                 <div class="flex w-full justify-between">
-                    <h1>New Building</h1>
+                    <h1>Edit Extra</h1>
                     <svg
-                        v-if="state.editBuilding.showEditBuildingModal"
-                        @click="state.editBuilding.showEditBuildingModal = false"
+                        v-if="state.editExtra.showEditExtraModal"
+                        @click="state.editExtra.showEditExtraModal = false"
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 cursor-pointer"
                         viewBox="0 0 256 256"
@@ -235,7 +176,7 @@
                 </div>
                 <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
                     <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Building Name</label>
+                        <label for="type" class="text-grayText text-sm">Extra Name</label>
                         <input
                             type="text"
                             class="
@@ -248,21 +189,29 @@
                                 w-full
                             "
                             placeholder="Enter Name"
-                            v-model="state.newBuilding.name"
+                            v-model="state.newExtra.name"
                         />
                     </div>
                     <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Assign to</label>
-                        <select
-                            class="focus:outline-none py-4 pl-4 pr-12 bg-grayBackground rounded-lg"
-                            id="type"
-                            name="type"
-                            v-model="state.newBuilding.assigned_to"
-                        >
-                            <option v-for="user in state.users" :key="user.id" :value="user.id">
-                                {{ user.name }}
-                            </option>
-                        </select>
+                        <label for="type" class="text-grayText text-sm">Extra Cost</label>
+                        <input
+                            type="number"
+                            class="
+                                focus:outline-none
+                                py-4
+                                pl-4
+                                pr-12
+                                bg-grayBackground
+                                rounded-lg
+                                w-full
+                            "
+                            placeholder="Extra Cost"
+                            v-model="state.newExtra.extra_cost"
+                        />
+                    </div>
+                    <div class="flex flex-col w-full space-y-2">
+                        <label for="type" class="text-grayText text-sm">Extra Cost</label>
+                        <Toggle v-model="state.newExtra.active" />
                     </div>
                 </div>
                 <div class="flex justify-between w-full space-x-4">
@@ -277,7 +226,7 @@
                             text-center
                             w-1/2
                         "
-                        @click="state.editBuilding.showEditBuildingModal = false"
+                        @click="state.editExtra.showEditExtraModal = false"
                     >
                         Cancel
                     </button>
@@ -292,7 +241,7 @@
                             text-center
                             w-1/2
                         "
-                        @click="editBuilding"
+                        @click="editExtra"
                     >
                         Save
                     </button>
@@ -301,11 +250,11 @@
         </div>
     </div>
     <!-- delete modal -->
-    <div v-if="state.deleteBuilding.showDeleteModal">
+    <div v-if="state.deleteExtra.showDeleteModal">
         <div
             class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
             style="background: rgba(0, 0, 0, 0.5)"
-            @click="state.deleteBuilding.showDeleteModal = false"
+            @click="state.deleteExtra.showDeleteModal = false"
         ></div>
         <div
             class="bg-white fixed h-2/5 w-1/3 z-20 rounded-xl overflow-hidden"
@@ -314,7 +263,7 @@
             <div class="p-6 flex flex-col items-center justify-between h-full space-y-8">
                 <div class="w-full text-center">
                     Are you sure you want to delete
-                    <span class="font-bold">{{ state.deleteBuilding.buildingToDelete.name }}</span
+                    <span class="font-bold">{{ state.deleteExtra.extraToDelete.name }}</span
                     >?
                 </div>
                 <div class="flex justify-between w-full space-x-4">
@@ -329,7 +278,7 @@
                             text-center
                             w-1/2
                         "
-                        @click="state.deleteBuilding.showDeleteModal = false"
+                        @click="state.deleteExtra.showDeleteModal = false"
                     >
                         Cancel
                     </button>
@@ -344,181 +293,9 @@
                             text-center
                             w-1/2
                         "
-                        @click="deleteBuilding"
+                        @click="deleteExtra"
                     >
                         Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- New Delivery Man Modal -->
-    <div v-if="state.showNewDeliveryManModal">
-        <div
-            class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
-            style="background: rgba(0, 0, 0, 0.5)"
-            @click="state.showNewDeliveryManModal = false"
-        ></div>
-        <div
-            class="bg-white fixed h-4/5 w-1/3 z-20 rounded-xl overflow-x-scroll"
-            style="top: 10%; left: 33%"
-        >
-            <div class="p-6 flex flex-col items-center space-y-6">
-                <div class="flex w-full justify-between">
-                    <h1>New Delivery Man</h1>
-                    <svg
-                        v-if="state.showNewDeliveryManModal"
-                        @click="state.showNewDeliveryManModal = false"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-5 w-5 cursor-pointer"
-                        viewBox="0 0 256 256"
-                        focusable="false"
-                        color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
-                    >
-                        <g
-                            color='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
-                            weight="regular"
-                        >
-                            <line
-                                x1="200"
-                                y1="56"
-                                x2="56"
-                                y2="200"
-                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="16"
-                            ></line>
-                            <line
-                                x1="200"
-                                y1="200"
-                                x2="56"
-                                y2="56"
-                                stroke='var(--token-d998ba50-db2a-431f-a911-5e59340fbf01, rgb(33, 33, 33)) /* {"name":"Black (New)"} */'
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="16"
-                            ></line>
-                        </g>
-                    </svg>
-                </div>
-                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
-                    <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Delivery Name</label>
-                        <input
-                            type="text"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
-                            "
-                            placeholder="Enter Name"
-                        />
-                    </div>
-                    <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Phone Number</label>
-                        <input
-                            type="text"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
-                            "
-                            placeholder="Enter Phone Number"
-                        />
-                    </div>
-                    <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Email</label>
-                        <span class="text-xs">We will send an invitation to this mail</span>
-                        <input
-                            type="text"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
-                            "
-                            placeholder="Enter Email"
-                        />
-                    </div>
-                    <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Password</label>
-                        <span class="text-xs">He won't be able to change this password</span>
-                        <input
-                            type="text"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
-                            "
-                            placeholder="Enter Password"
-                        />
-                    </div>
-                </div>
-                <div class="border rounded-lg p-4 flex flex-col items-start w-full space-y-4">
-                    <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm"
-                            >Assign delivery to building(s)</label
-                        >
-                        <treeselect
-                            v-model="state.buildings"
-                            :multiple="true"
-                            :flat="true"
-                            :options="[
-                                { id: 0, label: 'A-17 - Valeo' },
-                                { id: 1, label: 'A-18 - Valeo' },
-                                { id: 2, label: 'A-19 - Valeo' },
-                                { id: 3, label: 'A-20 - Valeo' },
-                                { id: 4, label: 'A-21 - Valeo' },
-                                { id: 5, label: 'A-22 - Valeo' },
-                            ]"
-                        />
-                    </div>
-                </div>
-                <div class="flex justify-between w-full space-x-4">
-                    <button
-                        class="
-                            text-orangeButton
-                            border border-orangeButton
-                            font-semibold
-                            py-4
-                            px-4
-                            rounded-md
-                            text-center
-                            w-1/2
-                        "
-                        @click="state.showNewDeliveryManModal = false"
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        class="
-                            bg-orangeButton
-                            text-white
-                            font-semibold
-                            py-4
-                            px-4
-                            rounded-md
-                            text-center
-                            w-1/2
-                        "
-                    >
-                        Save
                     </button>
                 </div>
             </div>
@@ -527,38 +304,7 @@
     <div class="flex flex-col">
         <div class="px-4 pt-10 pb-6 flex justify-between">
             <div class="flex items-center space-x-6">
-                <h1 class="font-semibold text-xl">Building Management</h1>
-                <div
-                    class="
-                        bg-semiLightGrayBackground
-                        flex
-                        space-x-2
-                        items-center
-                        px-4
-                        py-1
-                        rounded-md
-                        cursor-pointer
-                    "
-                    @click="state.showFilterModal = true"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill='var(--token-410de126-d64d-48e5-95b9-b10c155ba32c, rgb(49, 49, 49)) /* {\"name\":\"Black\"} */'
-                        viewBox="0 0 256 256"
-                        class="h-5 w-5"
-                    >
-                        <rect width="256" height="256" fill="none"></rect>
-                        <path
-                            d="M42.08441,48H213.91559a8,8,0,0,1,5.91952,13.38138l-65.75463,72.33009A8,8,0,0,0,152,139.09285v56.62568a8,8,0,0,1-3.5624,6.6564l-32,21.33334A8,8,0,0,1,104,217.05186v-77.959a8,8,0,0,0-2.08048-5.38138L36.16489,61.38138A8,8,0,0,1,42.08441,48Z"
-                            fill="none"
-                            stroke='var(--token-410de126-d64d-48e5-95b9-b10c155ba32c, rgb(49, 49, 49)) /* {\"name\":\"Black\"} */'
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="16"
-                        ></path>
-                    </svg>
-                    <span>Filter</span>
-                </div>
+                <h1 class="font-semibold text-xl">Extras Management</h1>
                 <div
                     class="
                         bg-semiLightGrayBackground
@@ -661,55 +407,32 @@
                         rounded-lg
                         border border-orangeButton
                     "
-                    @click="
-                        state.showNewBuildingModal = true;
-                        store.dispatch('getAllUsers').then((res) => {
-                            state.users = res.data.map((el) => {
-                                return { id: el.id, name: el.name };
-                            });
-                            state.newBuilding.assigned_to = state.users[0].id;
-                        });
-                    "
+                    @click="state.showNewExtraModal = true"
                 >
-                    <span>New Building</span>
-                </button>
-                <button
-                    @click="state.showNewDeliveryManModal = true"
-                    class="
-                        bg-orangeButton
-                        text-white
-                        font-bold
-                        text-sm
-                        flex
-                        items-center
-                        px-4
-                        py-1.5
-                        rounded-lg
-                    "
-                >
-                    <span>New Delivery man</span>
+                    <span>New Extra</span>
                 </button>
             </div>
         </div>
         <div class="flex flex-col p-6 space-y-2">
             <div class="flex flex-row text-grayText text-sm divide-x-2">
                 <span class="w-12 text-center">ID</span>
-                <span class="pl-2 w-3/12">Building</span>
-                <span class="pl-2 w-4/12">Number of users</span>
-                <span class="pl-2 w-4/12">Assigned to</span>
+                <span class="pl-2 w-5/12"> Extra </span>
+                <span class="pl-2 w-5/12">Extra Cost</span>
                 <span class="pl-2">Actions</span>
             </div>
             <div
                 class="flex flex-row bg-grayBackground text-sm divide-x-2 py-4 rounded-sm"
-                v-for="building in state.buildings"
-                :key="building"
+                v-for="extra in state.extras"
+                :key="extra"
             >
-                <span class="w-12 text-center">{{ building.id }}</span>
-                <span class="pl-2 w-3/12">{{ building.name }}</span>
-                <span class="pl-2 w-4/12">{{ building.number_of_users }} Users</span>
-                <div class="pl-2 w-4/12 flex items-center space-x-2">
-                    <span>{{ building.assigned_to.name }}</span>
+                <span class="w-12 text-center">{{ extra.id }}</span>
+                <div class="pl-2 w-5/12 flex space-x-2 items-center">
+                    <span>{{ extra.name }}</span>
+                    <h1 class="text-2xl" :class="extra.active ? 'text-green-400' : 'text-red-400'">
+                        &#x25cf;
+                    </h1>
                 </div>
+                <span class="pl-2 w-5/12">{{ extra.extra_cost }}</span>
                 <div class="pl-2 flex items-center space-x-4">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -719,8 +442,8 @@
                         viewBox="0 0 256 256"
                         class="h-5 w-5 cursor-pointer"
                         @click="
-                            state.deleteBuilding.showDeleteModal = true;
-                            state.deleteBuilding.buildingToDelete = building;
+                            state.deleteExtra.showDeleteModal = true;
+                            state.deleteExtra.extraToDelete = extra;
                         "
                     >
                         <rect width="256" height="256" fill="none"></rect>
@@ -782,14 +505,8 @@
                         viewBox="0 0 256 256"
                         class="h-5 w-5 cursor-pointer"
                         @click="
-                            getBuilding(building.id);
-                            store.dispatch('getAllUsers').then((res) => {
-                                state.users = res.data.map((el) => {
-                                    return { id: el.id, name: el.name };
-                                });
-                                state.newBuilding.assigned_to = state.users[0].id;
-                                state.editBuilding.buildingToEdit = building;
-                            });
+                            getExtra(extra.id);
+                            state.editExtra.extraToEdit = extra;
                         "
                     >
                         <rect width="256" height="256" fill="none"></rect>
@@ -822,110 +539,87 @@
 <script setup>
 import { reactive } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-import Treeselect from "vue3-treeselect";
 import "vue3-treeselect/dist/vue3-treeselect.css";
+import Toggle from "@vueform/toggle";
 import store from "../store";
 
 const state = reactive({
-    showFilterModal: false,
-    showNewBuildingModal: false,
+    showNewExtraModal: false,
     showSearchBar: false,
-    showNewDeliveryManModal: false,
-    deleteBuilding: {
+    deleteExtra: {
         showDeleteModal: false,
-        buildingToDelete: {},
+        extraToDelete: {},
     },
-    editBuilding: {
-        showEditBuildingModal: false,
-        buildingToEdit: {},
+    editExtra: {
+        showEditExtraModal: false,
+        extraToEdit: {},
     },
-    buildings: [],
-    filter: {
-        type: "assigned_to__name__contains",
-        value: "",
-    },
+    extras: [],
     search: "",
-    newBuilding: {
+    newExtra: {
         name: "",
-        assigned_to: "",
-        number_of_users: 0,
+        extra_cost: "",
+        active: 1,
     },
-    users: [],
 });
 
-const filter = () => {
-    store
-        .dispatch("filterBuildings", { ...state.filter })
-        .then((res) => {
-            state.buildings = res.data.results;
-            state.filter = {
-                type: "assigned_to__name__contains",
-                value: "",
-            };
-            state.showFilterModal = false;
-        })
-        .catch((err) => {
-            state.buildings = [];
-            state.showFilterModal = false;
-        });
-};
-
 const search = () => {
-    store.dispatch("searchBuildings", state.search).then((res) => {
-        state.buildings = res.data.results;
+    store.dispatch("searchExtras", state.search).then((res) => {
+        state.extras = res.data.results;
         state.search = "";
     });
 };
 
-const deleteBuilding = () => {
-    store.dispatch("deleteBuilding", state.deleteBuilding.buildingToDelete.id).then((res) => {
-        state.buildings = res.data.results;
-        state.deleteBuilding.showDeleteModal = false;
+const deleteExtra = () => {
+    store.dispatch("deleteExtra", state.deleteExtra.extraToDelete.id).then((res) => {
+        state.extras = res.data.results;
+        state.deleteExtra.showDeleteModal = false;
     });
 };
 
-const registerBuilding = () => {
-    store.dispatch("registerBuilding", state.newBuilding).then((res) => {
-        state.buildings = res.data.results;
-        state.newBuilding = {
+const registerExtra = () => {
+    store.dispatch("registerExtra", state.newExtra).then((res) => {
+        state.extras = res.data.results;
+        state.newExtra = {
             name: "",
-            assigned_to: "",
-            number_of_users: 0,
+            extra_cost: "",
+            active: 0,
         };
-        state.showNewBuildingModal = false;
+        state.showNewExtraModal = false;
     });
 };
 
-const getBuilding = (id) => {
-    store.dispatch("getBuilding", id).then((res) => {
-        state.newBuilding.name = res.name;
-        state.newBuilding.assigned_to = res.assigned_to;
-        state.editBuilding.showEditBuildingModal = true;
+const getExtra = (id) => {
+    store.dispatch("getExtra", id).then((res) => {
+        state.newExtra.name = res.name;
+        state.newExtra.extra_cost = res.extra_cost;
+        state.newExtra.active = res.active;
+        state.editExtra.showEditExtraModal = true;
     });
 };
 
-const editBuilding = () => {
+const editExtra = () => {
     store
-        .dispatch("editBuilding", {
-            id: state.editBuilding.buildingToEdit.id,
-            data: state.newBuilding,
+        .dispatch("editExtra", {
+            id: state.editExtra.extraToEdit.id,
+            data: state.newExtra,
         })
         .then((res) => {
-            state.buildings = res.data.results;
-            state.newBuilding = {
+            state.extras = res.data.results;
+            state.newExtra = {
                 name: "",
-                assigned_to: "",
-                number_of_users: 0,
+                extra_cost: "",
+                active: 0,
             };
-            state.editBuilding.showEditBuildingModal = false;
+            state.editExtra.showEditExtraModal = false;
         });
 };
 
 onMounted(() => {
     store
-        .dispatch("getBuildings")
+        .dispatch("getExtras")
         .then((res) => {
-            state.buildings = res.data.results;
+            state.extras = res.data.results;
         })
         .catch((err) => {});
 });
