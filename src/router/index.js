@@ -11,6 +11,7 @@ import PromoCodes from "../components/PromoCodes.vue";
 import PushNotifications from "../components/PushNotifications.vue";
 import Users from "../components/Users.vue";
 import Settings from "../components/Settings.vue";
+import SystemUsers from "../components/SystemUsers.vue";
 import store from "../store";
 
 const routes = [
@@ -75,6 +76,12 @@ const routes = [
         path: "/settings",
         name: "settings",
         component: Settings,
+        meta: { adminsOnly: true },
+    },
+    {
+        path: "/sys-users",
+        name: "system users",
+        component: SystemUsers,
         meta: { adminsOnly: true },
     },
     {

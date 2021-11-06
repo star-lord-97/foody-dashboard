@@ -703,5 +703,128 @@ export default createStore({
                     });
             });
         },
+
+        getAllNotifications(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/notifications/";
+                axios
+                    .get(url)
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        searchUsers(context, payload) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/auth/list/";
+                const parameters = {
+                    // email__contains: payload,
+                    // is_staff: false,
+                    // is_superuser: false,
+                    // is_delivery_man: false,
+                };
+                axios
+                    .get(url, {
+                        params: parameters,
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        searchSystemUsers(context, payload) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/auth/list/";
+                const parameters = {
+                    // email__contains: payload,
+                    // is_staff: false,
+                    // is_superuser: false,
+                    // is_delivery_man: false,
+                };
+                axios
+                    .get(url, {
+                        params: parameters,
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        getUsers(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/auth/list";
+                axios
+                    .get(url, {
+                        params: {
+                            //     is_staff: false,
+                            //     is_superuser: false,
+                            //     is_delivery_man: false,
+                        },
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+
+        getSystemUsers(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/auth/list";
+                axios
+                    .get(url, {
+                        params: {
+                            //     is_staff: true,
+                            //     is_superuser: true,
+                            //     is_delivery_man: true,
+                        },
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
     },
 });

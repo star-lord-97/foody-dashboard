@@ -481,7 +481,7 @@
                         v-if="state.showSearchBar"
                         type="text"
                         class="bg-semiLightGrayBackground w-full text-sm focus:outline-none py-0.5"
-                        placeholder="Search for ..."
+                        placeholder="Search by promo code ..."
                         autofocus
                         v-model="state.search"
                         @keyup.enter="search"
