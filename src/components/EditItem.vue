@@ -340,7 +340,7 @@ const uploadImage = (event) => {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     axios
-        .post("http://localhost:8000/api/v1/upload/", formData, {
+        .post("http://localhost:8000/foody/file_uploader/", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

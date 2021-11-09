@@ -91,9 +91,13 @@ export default createStore({
                 axios
                     .get(url)
                     .then((res) => {
-                        context.commit("resetValidationErrors");
-                        context.commit("toggleLoading");
-                        resolve(res);
+                        axios
+                            .get(context.state.baseUrl + `/auth/user_detail/${res.data.id}`)
+                            .then((res) => {
+                                context.commit("resetValidationErrors");
+                                context.commit("toggleLoading");
+                                resolve(res);
+                            });
                     })
                     .catch((err) => {
                         context.commit("setValidationErrors");
@@ -586,8 +590,7 @@ export default createStore({
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/extras/";
-                // const parameters = { name__contains: payload };
-                const parameters = { name: payload };
+                const parameters = { name__contains: payload };
                 axios
                     .get(url, {
                         params: parameters,
@@ -727,12 +730,12 @@ export default createStore({
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
-                const url = context.state.baseUrl + "/auth/list/";
+                const url = context.state.baseUrl + "/auth/list";
                 const parameters = {
-                    // email__contains: payload,
-                    // is_staff: false,
-                    // is_superuser: false,
-                    // is_delivery_man: false,
+                    email__contains: payload,
+                    is_staff: false,
+                    is_superuser: false,
+                    is_delivery_man: false,
                 };
                 axios
                     .get(url, {
@@ -752,23 +755,42 @@ export default createStore({
 
         searchSystemUsers(context, payload) {
             context.commit("toggleLoading");
+            const users = [];
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
-                const url = context.state.baseUrl + "/auth/list/";
-                const parameters = {
-                    // email__contains: payload,
-                    // is_staff: false,
-                    // is_superuser: false,
-                    // is_delivery_man: false,
-                };
+                const url = context.state.baseUrl + "/auth/list";
                 axios
                     .get(url, {
-                        params: parameters,
+                        params: {
+                            email__contains: payload,
+                            is_staff: true,
+                        },
                     })
                     .then((res) => {
-                        context.commit("resetValidationErrors");
-                        context.commit("toggleLoading");
-                        resolve(res);
+                        users.push(res.data);
+                        axios
+                            .get(url, {
+                                params: {
+                                    email__contains: payload,
+                                    is_superuser: true,
+                                },
+                            })
+                            .then((res) => {
+                                users.push(res.data);
+                                axios
+                                    .get(url, {
+                                        params: {
+                                            email__contains: payload,
+                                            is_delivery_man: true,
+                                        },
+                                    })
+                                    .then((res) => {
+                                        users.push(res.data);
+                                        context.commit("resetValidationErrors");
+                                        context.commit("toggleLoading");
+                                        resolve(users);
+                                    });
+                            });
                     })
                     .catch((err) => {
                         context.commit("toggleLoading");
@@ -785,9 +807,9 @@ export default createStore({
                 axios
                     .get(url, {
                         params: {
-                            //     is_staff: false,
-                            //     is_superuser: false,
-                            //     is_delivery_man: false,
+                            is_staff: false,
+                            is_superuser: false,
+                            is_delivery_man: false,
                         },
                     })
                     .then((res) => {
@@ -804,21 +826,39 @@ export default createStore({
 
         getSystemUsers(context) {
             context.commit("toggleLoading");
+            const users = [];
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/auth/list";
                 axios
                     .get(url, {
                         params: {
-                            //     is_staff: true,
-                            //     is_superuser: true,
-                            //     is_delivery_man: true,
+                            is_staff: true,
                         },
                     })
                     .then((res) => {
-                        context.commit("resetValidationErrors");
-                        context.commit("toggleLoading");
-                        resolve(res);
+                        users.push(res.data);
+                        axios
+                            .get(url, {
+                                params: {
+                                    is_superuser: true,
+                                },
+                            })
+                            .then((res) => {
+                                users.push(res.data);
+                                axios
+                                    .get(url, {
+                                        params: {
+                                            is_delivery_man: true,
+                                        },
+                                    })
+                                    .then((res) => {
+                                        users.push(res.data);
+                                        context.commit("resetValidationErrors");
+                                        context.commit("toggleLoading");
+                                        resolve(users);
+                                    });
+                            });
                     })
                     .catch((err) => {
                         context.commit("toggleLoading");

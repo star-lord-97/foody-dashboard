@@ -103,29 +103,29 @@ const router = createRouter({
     routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some((record) => record.meta.loggedOnly)) {
-//         if (!store.getters.isLogged) {
-//             store.dispatch("logout");
-//             next({ path: "/login" });
-//         } else {
-//             next();
-//         }
-//     } else if (to.matched.some((record) => record.meta.adminsOnly)) {
-//         if (!store.getters.isAdmin) {
-//             next({ path: "/kitchen" });
-//         } else {
-//             next();
-//         }
-//     } else if (to.matched.some((record) => record.meta.loggedOutOnly)) {
-//         if (store.getters.isLogged) {
-//             next({ path: "/" });
-//         } else {
-//             next();
-//         }
-//     } else {
-//         next();
-//     }
-// });
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.loggedOnly)) {
+        if (!store.getters.isLogged) {
+            store.dispatch("logout");
+            next({ path: "/login" });
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.adminsOnly)) {
+        if (!store.getters.isAdmin) {
+            next({ path: "/kitchen" });
+        } else {
+            next();
+        }
+    } else if (to.matched.some((record) => record.meta.loggedOutOnly)) {
+        if (store.getters.isLogged) {
+            next({ path: "/" });
+        } else {
+            next();
+        }
+    } else {
+        next();
+    }
+});
 
 export default router;

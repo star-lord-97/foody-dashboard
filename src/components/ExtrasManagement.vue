@@ -85,7 +85,7 @@
                         />
                     </div>
                     <div class="flex flex-col w-full space-y-2">
-                        <label for="type" class="text-grayText text-sm">Extra Cost</label>
+                        <label for="type" class="text-grayText text-sm">Active</label>
                         <Toggle v-model="state.newExtra.active" />
                     </div>
                 </div>

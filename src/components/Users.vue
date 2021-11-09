@@ -126,7 +126,7 @@
                 <span class="w-12 text-center">{{ user.id }}</span>
                 <span class="pl-2 w-3/12">{{ user.name }}</span>
                 <span class="pl-2 w-3/12">{{ user.username }}</span>
-                <span class="pl-2 w-3/12">{{ user.building_name }}</span>
+                <span class="pl-2 w-3/12">{{ user.building_name.name }}</span>
                 <span class="pl-2 w-3/12">{{ user.email }}</span>
             </div>
         </div>

@@ -256,15 +256,15 @@ const state = reactive({
 });
 
 const search = () => {
-    store.dispatch("searchUsers", state.search).then((res) => {
-        state.users = res.data;
+    store.dispatch("searchSystemUsers", state.search).then((res) => {
+        state.users = res.flat();
         state.search = "";
     });
 };
 
 onMounted(() => {
-    store.dispatch("getUsers").then((res) => {
-        state.users = res.data;
+    store.dispatch("getSystemUsers").then((res) => {
+        state.users = res.flat();
     });
 });
 </script>

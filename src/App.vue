@@ -719,10 +719,15 @@ const logout = () => {
 
 onMounted(() => {
     if (localStorage.getItem("foody_token")) {
-        store.dispatch("getUserData").then((res) => {
-            state.name = res.data.name;
-            state.email = res.data.email;
-        });
+        store
+            .dispatch("getUserData")
+            .then((res) => {
+                state.name = res.data.name;
+                state.email = res.data.email;
+            })
+            .catch((err) => {
+                router.push("/login");
+            });
     } else {
         router.push("/login");
     }
