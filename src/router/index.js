@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Login.vue";
 import ResetPassword from "../views/ResetPassword.vue";
 import OrdersManagement from "../components/OrdersManagement.vue";
+import OrderDetails from "../components/OrderDetails.vue";
 import ItemsManagement from "../components/ItemsManagement.vue";
 import ExtrasManagement from "../components/ExtrasManagement.vue";
 import EditItem from "../components/EditItem.vue";
@@ -18,6 +19,12 @@ const routes = [
     {
         path: "/",
         redirect: "/orders",
+    },
+    {
+        path: "/orders/:id",
+        name: "order",
+        component: OrderDetails,
+        meta: { adminsOnly: true },
     },
     {
         path: "/orders",

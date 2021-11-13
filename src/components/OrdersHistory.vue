@@ -12,21 +12,38 @@
             </div>
             <div
                 class="flex flex-row bg-grayBackground text-sm divide-x-2 py-4 rounded-sm"
-                v-for="item in 15"
-                :key="item"
+                v-for="order in state.orders"
+                :key="order.id"
             >
-                <span class="w-12 text-center">1</span>
-                <span class="pl-2 w-2/12 underline">Kareem Mohamed</span>
-                <span class="pl-2 w-2/12">14 A</span>
-                <span class="pl-2 w-2/12">250 EGP</span>
-                <span class="pl-2 w-2/12">2 Jan 2019 . 2:00</span>
-                <span class="pl-2 w-2/12 text-orangeButton">Delivered</span>
-                <span class="pl-2 w-2/12 text-blue-400 underline">Show Details</span>
+                <span class="w-12 text-center">{{ order.id }}</span>
+                <span class="pl-2 w-2/12 underline">{{ order.user.name }}</span>
+                <span class="pl-2 w-2/12">{{ order.building.name }}</span>
+                <span class="pl-2 w-2/12">{{ order.total }} EGP</span>
+                <span class="pl-2 w-2/12">{{ order.date }} . {{ order.timeslot.time_slot }}</span>
+                <span class="pl-2 w-2/12 text-orangeButton">{{ order.state }}</span>
+                <router-link :to="'/orders/' + order.id" class="pl-2 w-2/12 text-blue-400 underline"
+                    >Show Details</router-link
+                >
             </div>
         </div>
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { onMounted, reactive } from "@vue/runtime-core";
+import store from "../store";
+
+const state = reactive({
+    orders: [],
+});
+
+onMounted(() => {
+    setInterval(() => {
+        store.dispatch("getOrders").then((res) => {
+            state.orders = res.data.results;
+        });
+    }, 60000);
+});
+</script>
 
 <style></style>

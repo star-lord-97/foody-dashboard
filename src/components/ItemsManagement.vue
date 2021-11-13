@@ -680,12 +680,14 @@ const uploadImage = (event) => {
 onMounted(() => {
     store.dispatch("getCategories").then((res) => {
         state.categories = res.data.results;
-        state.currentCategory = state.categories[0];
-        state.newItem.category_id = state.categories[0].id;
-        getCategoryItems();
-        store.dispatch("getExtras").then((res) => {
-            state.extras = res.data.results;
-        });
+        if (state.categories.length > 0) {
+            state.currentCategory = state.categories[0];
+            state.newItem.category_id = state.categories[0].id;
+            getCategoryItems();
+            store.dispatch("getExtras").then((res) => {
+                state.extras = res.data.results;
+            });
+        }
     });
 });
 </script>

@@ -42,6 +42,7 @@ export default createStore({
         },
     },
     actions: {
+        // login
         login(context, payload) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -68,7 +69,6 @@ export default createStore({
                     });
             });
         },
-
         logout(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -82,7 +82,6 @@ export default createStore({
                 resolve();
             });
         },
-
         getUserData(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -106,7 +105,7 @@ export default createStore({
                     });
             });
         },
-
+        // buildings
         getBuildings(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -125,7 +124,6 @@ export default createStore({
                     });
             });
         },
-
         filterBuildings(context, payload) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -150,7 +148,6 @@ export default createStore({
                     });
             });
         },
-
         searchBuildings(context, payload) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -172,7 +169,6 @@ export default createStore({
                     });
             });
         },
-
         deleteBuilding(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -193,7 +189,6 @@ export default createStore({
                     });
             });
         },
-
         registerBuilding(context, building) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -214,7 +209,6 @@ export default createStore({
                     });
             });
         },
-
         getBuilding(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -232,7 +226,6 @@ export default createStore({
                     });
             });
         },
-
         getAllUsers(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -250,7 +243,6 @@ export default createStore({
                     });
             });
         },
-
         editBuilding(context, { id, data }) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -271,7 +263,7 @@ export default createStore({
                     });
             });
         },
-
+        // categories
         getCategories(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -290,26 +282,6 @@ export default createStore({
                     });
             });
         },
-
-        getExtras(context) {
-            context.commit("toggleLoading");
-            return new Promise((resolve, reject) => {
-                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
-                const url = context.state.baseUrl + "/extras/";
-                axios
-                    .get(url)
-                    .then((res) => {
-                        context.commit("resetValidationErrors");
-                        context.commit("toggleLoading");
-                        resolve(res);
-                    })
-                    .catch((err) => {
-                        context.commit("toggleLoading");
-                        reject(err);
-                    });
-            });
-        },
-
         editCategory(context, { id, data }) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -330,7 +302,6 @@ export default createStore({
                     });
             });
         },
-
         getCategory(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -348,7 +319,7 @@ export default createStore({
                     });
             });
         },
-
+        // promocodes
         registerCategory(context, category) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -369,7 +340,6 @@ export default createStore({
                     });
             });
         },
-
         getPromoCodes(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -388,7 +358,6 @@ export default createStore({
                     });
             });
         },
-
         editPromoCode(context, { id, data }) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -409,7 +378,6 @@ export default createStore({
                     });
             });
         },
-
         getPromoCode(context, code) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -427,7 +395,6 @@ export default createStore({
                     });
             });
         },
-
         registerPromoCode(context, promoCode) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -448,7 +415,6 @@ export default createStore({
                     });
             });
         },
-
         deletePromoCode(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -469,7 +435,6 @@ export default createStore({
                     });
             });
         },
-
         searchPromoCodes(context, keyword) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -487,7 +452,7 @@ export default createStore({
                     });
             });
         },
-
+        // items
         getCategoryItems(context, categoryId) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -506,7 +471,6 @@ export default createStore({
                     });
             });
         },
-
         getMenuItem(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -525,7 +489,6 @@ export default createStore({
                     });
             });
         },
-
         registerItem(context, item) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -546,7 +509,6 @@ export default createStore({
                     });
             });
         },
-
         registerItem(context, item) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -565,7 +527,6 @@ export default createStore({
                     });
             });
         },
-
         updateItem(context, { id, data }) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -584,7 +545,7 @@ export default createStore({
                     });
             });
         },
-
+        // extras
         searchExtras(context, payload) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -606,7 +567,6 @@ export default createStore({
                     });
             });
         },
-
         deleteExtra(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -627,7 +587,6 @@ export default createStore({
                     });
             });
         },
-
         registerExtra(context, extra) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -648,7 +607,6 @@ export default createStore({
                     });
             });
         },
-
         getExtra(context, id) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -666,7 +624,6 @@ export default createStore({
                     });
             });
         },
-
         editExtra(context, { id, data }) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -687,7 +644,6 @@ export default createStore({
                     });
             });
         },
-
         getExtras(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -706,7 +662,7 @@ export default createStore({
                     });
             });
         },
-
+        // notifications
         getAllNotifications(context) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -725,7 +681,7 @@ export default createStore({
                     });
             });
         },
-
+        // users
         searchUsers(context, payload) {
             context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
@@ -752,7 +708,31 @@ export default createStore({
                     });
             });
         },
-
+        getUsers(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/auth/list";
+                axios
+                    .get(url, {
+                        params: {
+                            is_staff: false,
+                            is_superuser: false,
+                            is_delivery_man: false,
+                        },
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+        // system users
         searchSystemUsers(context, payload) {
             context.commit("toggleLoading");
             const users = [];
@@ -798,32 +778,6 @@ export default createStore({
                     });
             });
         },
-
-        getUsers(context) {
-            context.commit("toggleLoading");
-            return new Promise((resolve, reject) => {
-                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
-                const url = context.state.baseUrl + "/auth/list";
-                axios
-                    .get(url, {
-                        params: {
-                            is_staff: false,
-                            is_superuser: false,
-                            is_delivery_man: false,
-                        },
-                    })
-                    .then((res) => {
-                        context.commit("resetValidationErrors");
-                        context.commit("toggleLoading");
-                        resolve(res);
-                    })
-                    .catch((err) => {
-                        context.commit("toggleLoading");
-                        reject(err);
-                    });
-            });
-        },
-
         getSystemUsers(context) {
             context.commit("toggleLoading");
             const users = [];
@@ -859,6 +813,103 @@ export default createStore({
                                         resolve(users);
                                     });
                             });
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+        // timeslots
+        getTimeslots(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/timeslot/";
+                axios
+                    .get(url)
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+        changeTimeslotStage(context, { id, data }) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/timeslot/" + id;
+                axios
+                    .put(url, data)
+                    .then((res) => {
+                        context.dispatch("getTimeslots").then((res) => {
+                            context.commit("resetValidationErrors");
+                            context.commit("toggleLoading");
+                            resolve(res);
+                        });
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+        // orders
+        getOrders(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/orders/";
+                axios
+                    .get(url)
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+        getTodaysOrders(context) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/orders/";
+                axios
+                    .get(url, {
+                        params: {
+                            date: new Date(),
+                        },
+                    })
+                    .then((res) => {
+                        context.commit("resetValidationErrors");
+                        context.commit("toggleLoading");
+                        resolve(res);
+                    })
+                    .catch((err) => {
+                        context.commit("toggleLoading");
+                        reject(err);
+                    });
+            });
+        },
+        getOrder(context, id) {
+            context.commit("toggleLoading");
+            return new Promise((resolve, reject) => {
+                axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
+                const url = context.state.baseUrl + "/orders/" + id;
+                axios
+                    .get(url)
+                    .then((res) => {
+                        context.commit("toggleLoading");
+                        resolve(res.data);
                     })
                     .catch((err) => {
                         context.commit("toggleLoading");
