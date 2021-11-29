@@ -664,9 +664,11 @@
                     @click="
                         state.showNewBuildingModal = true;
                         store.dispatch('getAllUsers').then((res) => {
-                            state.users = res.data.map((el) => {
-                                return { id: el.id, name: el.name };
-                            });
+                            state.users = res.data
+                                .filter((el) => el.is_delivery_man === true)
+                                .map((el) => {
+                                    return { id: el.id, name: el.name };
+                                });
                             state.newBuilding.assigned_to = state.users[0].id;
                         });
                     "

@@ -1,4 +1,6 @@
 <template>
+    {{ state.todaysOrders }}
+    {{ new Date().toISOString().split("T")[0] }}
     <div class="p-6 flex flex-col w-full">
         <div class="flex flex-col space-y-6">
             <div class="space-y-2" v-for="timeslot in state.timeslots" :key="timeslot.id">
@@ -99,23 +101,29 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "@vue/runtime-core";
+import { onMounted, onUnmounted, reactive } from "@vue/runtime-core";
 import store from "../store";
 
 const state = reactive({
     timeslots: [],
     todaysOrders: [],
+    getTodaysOrders: null,
 });
 
 onMounted(() => {
     store.dispatch("getTimeslots").then((res) => {
         state.timeslots = res.data.results;
-        setInterval(() => {
+        console.log(state.timeslots);
+        state.getTodaysOrders = setInterval(() => {
             store.dispatch("getTodaysOrders").then((res) => {
                 state.todaysOrders = res.data.results;
             });
         }, 60000);
     });
+});
+
+onUnmounted(() => {
+    clearInterval(state.getTodaysOrders);
 });
 </script>
 

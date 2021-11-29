@@ -5,14 +5,15 @@ export default createStore({
     state: {
         baseUrl: "http://localhost:8000/foody",
         token: localStorage.getItem("foody_token") || null,
-        isAdmin: localStorage.getItem("foody_isAdmin") || false,
-        isStaff: localStorage.getItem("foody_isStaff") || false,
-        loading: false,
-        validationErrors: false,
+        user: JSON.parse(localStorage.getItem("foody_user")) || null,
+        isLoading: false,
     },
     getters: {
         token(state) {
             return state.token;
+        },
+        user(state) {
+            return state.user;
         },
         isLogged(state) {
             return state.token !== null;
@@ -23,8 +24,8 @@ export default createStore({
         isStaff(state) {
             return state.isStaff;
         },
-        loading(state) {
-            return state.loading;
+        isLoading(state) {
+            return state.isLoading;
         },
         validationErrors(state) {
             return state.validationErrors;
@@ -32,7 +33,7 @@ export default createStore({
     },
     mutations: {
         toggleLoading(state) {
-            state.loading = !state.loading;
+            state.isLoading = !state.isLoading;
         },
         setValidationErrors(state) {
             state.validationErrors = true;
@@ -44,7 +45,6 @@ export default createStore({
     actions: {
         // login
         login(context, payload) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 const url = context.state.baseUrl + "/auth/jwt/create/";
                 axios
@@ -53,37 +53,26 @@ export default createStore({
                         localStorage.setItem("foody_token", res.data.access);
                         context.state.token = res.data.access;
                         context.dispatch("getUserData").then((res) => {
-                            localStorage.setItem("foody_isAdmin", res.data.is_superuser);
-                            localStorage.setItem("foody_isStaff", res.data.is_staff);
-                            context.state.isAdmin = res.data.is_superuser;
-                            context.state.isStaff = res.data.is_staff;
-                            context.commit("resetValidationErrors");
-                            context.commit("toggleLoading");
+                            localStorage.setItem("foody_user", JSON.stringify(res.data));
+                            context.state.user = res.data;
                             resolve(res);
                         });
                     })
                     .catch((err) => {
-                        context.commit("setValidationErrors");
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
         },
         logout(context) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 localStorage.removeItem("foody_token");
                 context.state.token = null;
-                localStorage.removeItem("foody_isAdmin");
-                context.state.isAdmin = false;
-                localStorage.removeItem("foody_isStaff");
-                context.state.isStaff = false;
-                context.commit("toggleLoading");
+                localStorage.removeItem("foody_user");
+                context.state.user = null;
                 resolve();
             });
         },
         getUserData(context) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/auth/users/me/";
@@ -93,14 +82,10 @@ export default createStore({
                         axios
                             .get(context.state.baseUrl + `/auth/user_detail/${res.data.id}`)
                             .then((res) => {
-                                context.commit("resetValidationErrors");
-                                context.commit("toggleLoading");
                                 resolve(res);
                             });
                     })
                     .catch((err) => {
-                        context.commit("setValidationErrors");
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
@@ -341,25 +326,20 @@ export default createStore({
             });
         },
         getPromoCodes(context) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/promocodes/";
                 axios
                     .get(url)
                     .then((res) => {
-                        context.commit("resetValidationErrors");
-                        context.commit("toggleLoading");
                         resolve(res);
                     })
                     .catch((err) => {
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
         },
         editPromoCode(context, { id, data }) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/promocodes/update/" + id;
@@ -367,36 +347,29 @@ export default createStore({
                     .put(url, data)
                     .then((res) => {
                         context.dispatch("getPromoCodes").then((res) => {
-                            context.commit("resetValidationErrors");
-                            context.commit("toggleLoading");
                             resolve(res);
                         });
                     })
                     .catch((err) => {
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
         },
         getPromoCode(context, code) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/promocodes/";
                 axios
                     .get(url, { params: { code } })
                     .then((res) => {
-                        context.commit("toggleLoading");
                         resolve(res.data);
                     })
                     .catch((err) => {
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
         },
         registerPromoCode(context, promoCode) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/promocodes/";
@@ -404,19 +377,15 @@ export default createStore({
                     .post(url, promoCode)
                     .then((res) => {
                         context.dispatch("getPromoCodes").then((res) => {
-                            context.commit("resetValidationErrors");
-                            context.commit("toggleLoading");
                             resolve(res);
                         });
                     })
                     .catch((err) => {
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
         },
         deletePromoCode(context, id) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/promocodes/destroy/" + id;
@@ -424,30 +393,24 @@ export default createStore({
                     .delete(url)
                     .then((res) => {
                         context.dispatch("getPromoCodes").then((res) => {
-                            context.commit("resetValidationErrors");
-                            context.commit("toggleLoading");
                             resolve(res);
                         });
                     })
                     .catch((err) => {
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
         },
         searchPromoCodes(context, keyword) {
-            context.commit("toggleLoading");
             return new Promise((resolve, reject) => {
                 axios.defaults.headers.common["Authorization"] = "Bearer " + context.getters.token;
                 const url = context.state.baseUrl + "/promocodes/";
                 axios
                     .get(url, { params: { code: keyword } })
                     .then((res) => {
-                        context.commit("toggleLoading");
                         resolve(res.data);
                     })
                     .catch((err) => {
-                        context.commit("toggleLoading");
                         reject(err);
                     });
             });
@@ -886,7 +849,7 @@ export default createStore({
                 axios
                     .get(url, {
                         params: {
-                            date: new Date(),
+                            created: new Date().toISOString().split("T")[0],
                         },
                     })
                     .then((res) => {

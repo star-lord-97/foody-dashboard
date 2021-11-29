@@ -1,12 +1,15 @@
 <template>
-    <div class="flex justify-center items-center w-screen min-h-screen z-50" v-if="loading">
+    <div
+        class="fixed flex bg-white justify-center items-center w-screen min-h-screen z-50"
+        v-if="isLoading"
+    >
         <moon-loader color="black"></moon-loader>
     </div>
     <div class="w-screen h-screen font-urbanist">
         <Login v-if="$route.name === 'login'" />
         <div v-else class="flex">
             <div class="w-80 bg-grayBackground h-full p-6 flex flex-col fixed">
-                <div class="space-y-4">
+                <div class="flex items-center justify-between" v-if="user">
                     <img
                         src="./assets/profile-picture.jpg"
                         alt=""
@@ -14,7 +17,7 @@
                     />
                     <div>
                         <div class="flex items-center space-x-2">
-                            <h1 class="font-semibold text-lg">{{ state.name }}</h1>
+                            <h1 class="font-semibold text-lg">{{ user.username }}</h1>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="1em"
@@ -45,7 +48,7 @@
                                 ></line>
                             </svg>
                         </div>
-                        <p class="text-grayText text-sm">{{ state.email }}</p>
+                        <p class="text-grayText text-sm">{{ user.email }}</p>
                     </div>
                 </div>
                 <hr class="my-4" />
@@ -702,33 +705,28 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const state = reactive({
-    name: "",
-    email: "",
+const isLoading = computed(() => {
+    return store.getters.isLoading;
 });
 
-const loading = computed(() => {
-    return store.getters.loading;
+const user = computed(() => {
+    return store.getters.user;
+});
+
+const isLogged = computed(() => {
+    return store.getters.isLogged;
 });
 
 const logout = () => {
+    store.commit("toggleLoading");
     store.dispatch("logout").then((res) => {
         router.push("/login");
+        store.commit("toggleLoading");
     });
 };
 
 onMounted(() => {
-    if (localStorage.getItem("foody_token")) {
-        store
-            .dispatch("getUserData")
-            .then((res) => {
-                state.name = res.data.name;
-                state.email = res.data.email;
-            })
-            .catch((err) => {
-                router.push("/login");
-            });
-    } else {
+    if (!isLogged.value) {
         router.push("/login");
     }
 });

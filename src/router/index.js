@@ -111,15 +111,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((record) => record.meta.loggedOnly)) {
-        if (!store.getters.isLogged) {
-            store.dispatch("logout");
-            next({ path: "/login" });
-        } else {
-            next();
-        }
-    } else if (to.matched.some((record) => record.meta.adminsOnly)) {
-        if (!store.getters.isAdmin) {
+    if (to.matched.some((record) => record.meta.adminsOnly)) {
+        if (!store.getters.user.is_superuser) {
             next({ path: "/kitchen" });
         } else {
             next();

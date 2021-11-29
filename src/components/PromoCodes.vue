@@ -5,26 +5,23 @@
             class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
             style="background: rgba(0, 0, 0, 0.5)"
             @click="
+                initPromoCode();
                 state.editPromo.showEditModal = false;
-                state.newPromoCode = {
-                    code: '',
-                    usage_number_limit: '',
-                    expiration_date: new Date(),
-                    discount_value: '',
-                    maximum_value: '',
-                };
             "
         ></div>
         <div
             class="bg-white fixed h-5/5 w-1/3 z-20 rounded-xl overflow-hidden"
             style="top: 5%; left: 33%"
         >
-            <div class="p-6 flex flex-col items-center justify-between h-full">
+            <div class="p-6 flex flex-col items-center h-full space-y-2">
                 <div class="flex w-full justify-between">
                     <h1>Edit Promo</h1>
                     <svg
-                        v-if="state.showNewPromoCodeModal"
-                        @click="state.showNewPromoCodeModal = false"
+                        v-if="state.editPromo.showEditModal"
+                        @click="
+                            initPromoCode();
+                            state.editPromo.showEditModal = false;
+                        "
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 cursor-pointer"
                         viewBox="0 0 256 256"
@@ -63,16 +60,9 @@
                         <label for="type" class="text-grayText text-sm">Code</label>
                         <input
                             type="text"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
-                            "
-                            placeholder="Ex: hn3js"
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :class="state.err.code ? 'bg-red-200' : 'bg-grayBackground'"
+                            :placeholder="state.err.code ? state.err.code[0] : 'Ex: hn3js'"
                             v-model="state.newPromoCode.code"
                         />
                     </div>
@@ -82,16 +72,15 @@
                         >
                         <input
                             type="number"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :class="
+                                state.err.usage_number_limit ? 'bg-red-200' : 'bg-grayBackground'
                             "
-                            placeholder="Ex: 10"
+                            :placeholder="
+                                state.err.usage_number_limit
+                                    ? state.err.usage_number_limit[0]
+                                    : 'Ex: 10'
+                            "
                             v-model="state.newPromoCode.usage_number_limit"
                         />
                     </div>
@@ -124,16 +113,11 @@
                         <label for="type" class="text-grayText text-sm">Discount Percentage</label>
                         <input
                             type="number"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :class="state.err.discount_value ? 'bg-red-200' : 'bg-grayBackground'"
+                            :placeholder="
+                                state.err.discount_value ? state.err.discount_value[0] : 'Ex: 30'
                             "
-                            placeholder="Ex: 30"
                             v-model="state.newPromoCode.discount_value"
                         />
                     </div>
@@ -141,16 +125,11 @@
                         <label for="type" class="text-grayText text-sm">Discount Maximum</label>
                         <input
                             type="number"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :class="state.err.maximum_value ? 'bg-red-200' : 'bg-grayBackground'"
+                            :placeholder="
+                                state.err.maximum_value ? state.err.maximum_value[0] : 'Ex: 30'
                             "
-                            placeholder="Ex: 30"
                             v-model="state.newPromoCode.maximum_value"
                         />
                     </div>
@@ -168,12 +147,8 @@
                             w-1/2
                         "
                         @click="
+                            initPromoCode();
                             state.editPromo.showEditModal = false;
-                            state.newPromoCode = {
-                                code: '',
-                                usage_number_limit: '',
-                                expiration_date: new Date(),
-                            };
                         "
                     >
                         Cancel
@@ -254,18 +229,24 @@
         <div
             class="fixed top-0 left-0 z-10 w-screen h-screen cursor-pointer"
             style="background: rgba(0, 0, 0, 0.5)"
-            @click="state.showNewPromoCodeModal = false"
+            @click="
+                initPromoCode();
+                state.showNewPromoCodeModal = false;
+            "
         ></div>
         <div
             class="bg-white fixed h-5/5 w-1/3 z-20 rounded-xl overflow-hidden"
             style="top: 5%; left: 33%"
         >
-            <div class="p-6 flex flex-col items-center justify-between h-full">
+            <div class="p-6 flex flex-col items-center h-full space-y-2">
                 <div class="flex w-full justify-between">
                     <h1>New Promo</h1>
                     <svg
                         v-if="state.showNewPromoCodeModal"
-                        @click="state.showNewPromoCodeModal = false"
+                        @click="
+                            initPromoCode();
+                            state.showNewPromoCodeModal = false;
+                        "
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5 cursor-pointer"
                         viewBox="0 0 256 256"
@@ -304,16 +285,9 @@
                         <label for="type" class="text-grayText text-sm">Code</label>
                         <input
                             type="text"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
-                            "
-                            placeholder="Ex: hn3js"
+                            :class="state.err.code ? 'bg-red-200' : 'bg-grayBackground'"
+                            :placeholder="state.err.code ? state.err.code[0] : 'Ex: hn3js'"
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
                             v-model="state.newPromoCode.code"
                         />
                     </div>
@@ -323,16 +297,15 @@
                         >
                         <input
                             type="number"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :placeholder="
+                                state.err.usage_number_limit
+                                    ? state.err.usage_number_limit[0]
+                                    : 'Ex: 10'
                             "
-                            placeholder="Ex: 10"
+                            :class="
+                                state.err.usage_number_limit ? 'bg-red-200' : 'bg-grayBackground'
+                            "
                             v-model="state.newPromoCode.usage_number_limit"
                         />
                     </div>
@@ -365,16 +338,11 @@
                         <label for="type" class="text-grayText text-sm">Discount Percentage</label>
                         <input
                             type="number"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :placeholder="
+                                state.err.discount_value ? state.err.discount_value[0] : 'Ex: 30'
                             "
-                            placeholder="Ex: 30"
+                            :class="state.err.discount_value ? 'bg-red-200' : 'bg-grayBackground'"
                             v-model="state.newPromoCode.discount_value"
                         />
                     </div>
@@ -382,16 +350,11 @@
                         <label for="type" class="text-grayText text-sm">Discount Maximum</label>
                         <input
                             type="number"
-                            class="
-                                focus:outline-none
-                                py-4
-                                pl-4
-                                pr-12
-                                bg-grayBackground
-                                rounded-lg
-                                w-full
+                            class="focus:outline-none py-4 pl-4 pr-12 rounded-lg w-full"
+                            :placeholder="
+                                state.err.maximum_value ? state.err.maximum_value[0] : 'Ex: 30'
                             "
-                            placeholder="Ex: 30"
+                            :class="state.err.maximum_value ? 'bg-red-200' : 'bg-grayBackground'"
                             v-model="state.newPromoCode.maximum_value"
                         />
                     </div>
@@ -408,7 +371,10 @@
                             text-center
                             w-1/2
                         "
-                        @click="state.showNewPromoCodeModal = false"
+                        @click="
+                            initPromoCode();
+                            state.showNewPromoCodeModal = false;
+                        "
                     >
                         Cancel
                     </button>
@@ -437,6 +403,7 @@
             <div class="flex items-center space-x-6">
                 <h1 class="font-semibold text-xl">Promo Codes</h1>
                 <div
+                    v-if="state.promoCodes.length > 0"
                     class="
                         bg-semiLightGrayBackground
                         flex
@@ -535,7 +502,10 @@
                     px-4
                     rounded-lg
                 "
-                @click="state.showNewPromoCodeModal = true"
+                @click="
+                    initPromoCode();
+                    state.showNewPromoCodeModal = true;
+                "
             >
                 <span>Create Promo</span>
             </button>
@@ -691,16 +661,20 @@ const state = reactive({
     },
     showSearchBar: false,
     search: "",
+    err: [],
 });
 
 const deletePromoCode = () => {
+    store.commit("toggleLoading");
     store.dispatch("deletePromoCode", state.deletePromoCode.promoToDelete.id).then((res) => {
         state.promoCodes = res.data.results;
         state.deletePromoCode.showDeleteModal = false;
+        store.commit("toggleLoading");
     });
 };
 
 const editPromoCode = () => {
+    store.commit("toggleLoading");
     store
         .dispatch("editPromoCode", {
             id: state.editPromo.promoIdToEdit,
@@ -711,18 +685,19 @@ const editPromoCode = () => {
         })
         .then((res) => {
             state.promoCodes = res.data.results;
-            state.newPromoCode = {
-                code: "",
-                usage_number_limit: "",
-                expiration_date: new Date(),
-                discount_value: "",
-                maximum_value: "",
-            };
+            initPromoCode();
             state.editPromo.showEditModal = false;
+            state.err = [];
+            store.commit("toggleLoading");
+        })
+        .catch((err) => {
+            state.err = err.response.data;
+            store.commit("toggleLoading");
         });
 };
 
 const registerPromoCode = () => {
+    store.commit("toggleLoading");
     store
         .dispatch("registerPromoCode", {
             ...state.newPromoCode,
@@ -730,18 +705,18 @@ const registerPromoCode = () => {
         })
         .then((res) => {
             state.promoCodes = res.data.results;
-            state.newPromoCode = {
-                code: "",
-                usage_number_limit: "",
-                expiration_date: new Date(),
-                discount_value: "",
-                maximum_value: "",
-            };
+            initPromoCode();
             state.showNewPromoCodeModal = false;
+            store.commit("toggleLoading");
+        })
+        .catch((err) => {
+            state.err = err.response.data;
+            store.commit("toggleLoading");
         });
 };
 
 const getPromoCode = ({ id, code }) => {
+    store.commit("toggleLoading");
     store.dispatch("getPromoCode", code).then((res) => {
         state.newPromoCode.code = res.results[0].code;
         state.newPromoCode.usage_number_limit = res.results[0].usage_number_limit;
@@ -750,20 +725,36 @@ const getPromoCode = ({ id, code }) => {
         state.newPromoCode.maximum_value = res.results[0].maximum_value;
         state.editPromo.promoIdToEdit = id;
         state.editPromo.showEditModal = true;
+        store.commit("toggleLoading");
     });
 };
 
 const search = () => {
+    store.commit("toggleLoading");
     store.dispatch("searchPromoCodes", state.search).then((res) => {
         state.promoCodes = res.results;
         state.search = "";
         state.showSearchBar = false;
+        store.commit("toggleLoading");
     });
 };
 
+const initPromoCode = () => {
+    state.newPromoCode = {
+        code: "",
+        usage_number_limit: "",
+        expiration_date: new Date(),
+        discount_value: "",
+        maximum_value: "",
+    };
+    state.err = [];
+};
+
 onMounted(() => {
+    store.commit("toggleLoading");
     store.dispatch("getPromoCodes").then((res) => {
         state.promoCodes = res.data.results;
+        store.commit("toggleLoading");
     });
 });
 </script>

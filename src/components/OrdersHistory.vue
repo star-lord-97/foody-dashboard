@@ -30,19 +30,24 @@
 </template>
 
 <script setup>
-import { onMounted, reactive } from "@vue/runtime-core";
+import { onMounted, onUnmounted, reactive } from "@vue/runtime-core";
 import store from "../store";
 
 const state = reactive({
     orders: [],
+    getOrders: null,
 });
 
 onMounted(() => {
-    setInterval(() => {
+    state.getOrders = setInterval(() => {
         store.dispatch("getOrders").then((res) => {
             state.orders = res.data.results;
         });
-    }, 60000);
+    }, 10000);
+});
+
+onUnmounted(() => {
+    clearInterval(state.getOrders);
 });
 </script>
 

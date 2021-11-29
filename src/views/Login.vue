@@ -35,7 +35,8 @@
                 <div class="space-y-6 flex flex-col w-full">
                     <input
                         type="text"
-                        placeholder="Enter your Email"
+                        :placeholder="state.err.email ? state.err.email[0] : 'Enter your Email'"
+                        :class="state.err.email ? 'bg-red-200' : ''"
                         class="
                             text-sm
                             font-semibold
@@ -49,7 +50,8 @@
                     />
                     <input
                         type="password"
-                        placeholder="Enter your password"
+                        :placeholder="state.err.email ? state.err.email[0] : 'Enter your Password'"
+                        :class="state.err.email ? 'bg-red-200' : ''"
                         class="
                             text-sm
                             font-semibold
@@ -62,9 +64,9 @@
                         v-model="state.password"
                     />
                 </div>
-                <span v-if="validationErrors" class="text-xs text-red-400"
-                    >Wrong credentials, double check and tyr again!</span
-                >
+                <span v-if="state.err.detail" class="text-xs text-red-400">{{
+                    state.err.detail
+                }}</span>
                 <div class="flex justify-between w-full text-sm">
                     <router-link
                         to="/reset-password"
@@ -117,7 +119,7 @@
 </template>
 
 <script setup>
-import { computed, reactive } from "@vue/reactivity";
+import { reactive } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import store from "../store";
 
@@ -126,20 +128,23 @@ const router = useRouter();
 const state = reactive({
     email: "",
     password: "",
+    err: {},
 });
 
 const login = () => {
+    store.commit("toggleLoading");
     store
         .dispatch("login", { ...state })
         .then((res) => {
             router.push("/orders");
+            state.err = [];
+            store.commit("toggleLoading");
         })
-        .catch((err) => {});
+        .catch((err) => {
+            state.err = err.response.data;
+            store.commit("toggleLoading");
+        });
 };
-
-const validationErrors = computed(() => {
-    return store.getters.validationErrors;
-});
 </script>
 
 <style scoped></style>
